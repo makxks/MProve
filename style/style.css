@@ -1,0 +1,545 @@
+form {
+    margin: 5px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+input {
+    width: 80%;
+    border-radius: 5px;
+    border: 2px black solid;
+}
+
+input[type=text]{
+    text-align: center;
+}
+
+.btn {
+    margin: 5px;
+}
+
+h3, h6, p {
+    padding: 5px;
+    margin: 10px;
+}
+
+form h3 {
+    text-align: center;
+    margin: 10px;
+    margin-top: 20px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    height: 60%;
+    margin: 0;
+    padding: 0;
+    flex: 1 0 auto;
+}
+
+.appContainer {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+
+h1 {
+    color: #A97023;
+    margin-bottom: 1px;
+}
+
+.section hr {
+    margin: 5px 0;
+}
+
+.mainButtonGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.mainButton {
+    margin-top: 260px;
+    height: 200px;
+    width: 260px;
+    border: #A97023 4px solid;
+    border-radius: 15px;
+    background-color: #A97023;
+    font-size: 28px;
+    color: white;
+}
+
+.mainButton:hover {
+    border: #C98529 4px solid;
+    background-color: #EEEEEE;
+    color: #C98529;
+}
+
+.mainButton:active {
+    border: #805419 4px solid;
+    background-color: white;
+    color: #1F1F1F;
+}
+
+.appContainer .homeButton {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.appContainer .button, .appContainer .buttonForm {
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: white;
+    font-size: 16px;
+    color: #2F2F2F;
+    padding: 7px;
+    width: 25%;
+    min-width: 250px;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.appContainer .buttonForm {
+    min-height: 40px;
+    margin-top: 20px;
+}
+
+.appContainer .authButtons {
+    width: 100%;
+}
+
+.appContainer .removeButton {
+    width: 15%;
+    border: none;
+    border-radius: 5px;
+    margin: 2px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.appContainer .targetButtons {
+    margin-left: 5px;
+}
+
+.appContainer .removeButton:hover, .appContainer .targetButtons:hover {
+    color: darkgrey;
+    cursor: pointer;
+}
+
+.appContainer .removeButton:active, .appContainer .removeButton:focus, .appContainer .targetButtons:active, .appContainer .targetButtons:focus {
+    color: lightgrey;
+}
+
+.appContainer .hidden {
+    display: none;
+}
+
+.button:hover, .buttonForm:hover {
+    border-radius: 5px;
+    border: 1px solid #4E4E4E;
+    background-color: #EEEEEE;
+    color: #4E4E4E;
+}
+
+.primaryButton {
+    border-radius: 5px;
+    border: #A97023 2px solid;
+    background-color: #A97023;
+    font-size: 16px;
+    color: white;
+    padding: 8px;
+    width: 20%;
+}
+
+.primaryButton:hover {
+    border: #C98529 2px solid;
+    background-color: #EEEEEE;
+    color: #C98529;
+}
+
+.section {
+    height: 97%;
+    margin-top: 2%;
+}
+
+.targets, .rewards {
+    height: 100%;
+    width: 100%;
+}
+
+.mainList, .mainListComplete {
+    overflow-y: scroll;
+}
+
+.profile {
+    height: 550px;
+    min-height: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.appContainer .logo {
+    width: 390px;
+    color: #A97023;
+    margin: -10px 0;
+}
+
+.appContainer .logo h1 {
+    font-size: 90px;
+    width: 390px;
+}
+
+.appContainer a:hover, .appContainer a:focus, .appContainer a:active {
+    text-decoration: none;
+}
+
+.tagline {
+    float: right;
+    margin-top: 9px;
+}
+
+.tagline p {
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    margin-left: 0;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+    margin-bottom: -10px;
+    height: 10%;
+}
+
+.authForm {
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.targetList {
+    height: 40%;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-left: 0;
+    margin-bottom: 5px;
+}
+
+.list .subList {
+    width: 95%;
+    margin-left: 5%;
+}
+
+.list .subList p:first-child{
+    width: 26.5%;
+}
+
+.list .subList p:nth-child(2) {
+    width: 22%;
+}
+
+.list .subList p:nth-child(3) {
+    padding-left: 0.7%;
+    margin-right: 0.4%;
+}
+
+.list .subListComplete {
+    width: 95%;
+    margin-left: 5%;
+}
+
+.list .subListComplete p:first-child{
+    width: 19%;
+}
+
+.list .subListComplete p:nth-child(2) {
+    width: 26.5%;
+    padding-right: 1.5%;
+}
+
+.headings, .headingsComplete {
+    background-color: #FED194;
+    min-height: 15%;
+}
+
+.headings p, .headingsComplete p {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.listItem p {
+    width: 20%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.listItem p:first-child {
+    width: 30%;
+    text-align: left;
+}
+
+.headingsComplete p {
+    width: 25%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.list .headings p:first-child {
+    text-align: center;
+}
+
+.listItem p span {
+    top: 2px;
+}
+
+.listItem:first-child {
+    text-align: center;
+}
+
+.listItem p:nth-child(4){
+    width: 12%;
+}
+
+.listItem p:nth-child(5){
+    width: 18%;
+}
+
+.listItem, .headingsComplete {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.mainListItemContainer:nth-child(odd){
+    background-color: #EDEDED;
+}
+
+.mainListItemContainer:nth-child(odd) button{
+    background-color: #EDEDED;
+    width: 15%;
+    right: 5px;
+    margin: -1px;
+    height: 40px;
+    top: 5px;
+    padding: 0;
+}
+
+.mainListItemContainer:nth-child(even) {
+    background-color: #FED194;
+}
+
+.mainListItemContainer:nth-child(even) button {
+    background-color: #FED194;
+    width: 15%;
+    right: 5px;
+    margin: -1px;
+    height: 40px;
+    top: 5px;
+    padding: 0;
+}
+
+.mainListItemContainer>.mainListItem .subList .subListItem:nth-child(even),
+.mainListItemContainer>.completeListItem .subListComplete .subListItemComplete:nth-child(even){
+    background-color: #E0E0E0;
+}
+
+.mainListItemContainer>.mainListItem .subList .subListItem:nth-child(even) button {
+    background-color: #E0E0E0;
+    width: 16%;
+    right: 1px;
+    margin: -1px;
+    padding-left: 4%;
+    height: 40px;
+    top: 5px;
+    padding: 0;
+}
+
+.mainListItemContainer>.completeListItem .subListComplete .subListItemComplete:nth-child(even) button {
+    background-color: #E0E0E0;
+    width: 26%;
+    padding-right: 0.5%;
+}
+
+.mainListItemContainer>.mainListItem .subList .subListItem:nth-child(odd),
+.mainListItemContainer>.completeListItem .subListComplete .subListItemComplete:nth-child(odd) {
+    background-color: #EBBF89;
+}
+
+.mainListItemContainer>.mainListItem .subList .subListItem:nth-child(odd) button {
+    background-color: #EBBF89;
+    width: 16%;
+    right: 1px;
+    margin: -1px;
+    padding-left: 4%;
+    height: 40px;
+    top: 5px;
+    padding: 0;
+}
+
+.mainListItemContainer>.completeListItem .subListComplete .subListItemComplete:nth-child(odd) button {
+    background-color: #EBBF89;
+    width: 26%;
+    padding-right: 0.5%;
+}
+
+.mainListItemContainer>.mainListItem .subList .subListItem .removeButton:last-child {
+    width: 16.7%;
+    margin-left:-0.3%;
+}
+
+.mainListItemContainer>.completeListItem .subListComplete .subListItemComplete .removeButton:last-child {
+    width: 23%;
+    padding-left: 3.2%;
+}
+
+.listItemComplete p:first-child, .listItemComplete p:nth-child(2) {
+    width: 25%;
+}
+
+.listItemComplete p:nth-child(2) {
+    padding-right: 2.5%;
+}
+
+.listItemComplete button {
+    width: 25%;
+}
+
+.list .subList .subListItem {
+    width: 100%;
+}
+
+.list .subList .fade, .list .subListComplete .fade {
+    opacity: 0.5;
+}
+
+.listItem p .glyphicon {
+    padding: 0 5px;
+}
+
+.mainListItemContainer:nth-child(odd) .completeListItem .listItemComplete .buttonComplete, .mainListItemContainer:nth-child(even) .completeListItem .listItemComplete .buttonComplete {
+    width: 25%;
+    right: 8px;
+    margin: -1px;
+    height: 40px;
+    top: 5px;
+    padding: 0;
+}
+
+.mainListItemContainer:nth-child(odd) .completeListItem .listItemComplete .buttonComplete:last-child, .mainListItemContainer:nth-child(even) .completeListItem .listItemComplete .buttonComplete:last-child {
+    padding-left: 3%;
+    width: 23%;
+}
+
+.mainListItemContainer:nth-child(odd) .completeListItem .listItemComplete .buttonComplete {
+    background-color: #EDEDED;
+}
+
+.mainListItemContainer:nth-child(even) .completeListItem .listItemComplete .buttonComplete {
+    background-color: #FED194;
+}
+
+.showSubTasks {
+    margin-right: 10px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.editPanel {
+    position: fixed;
+    opacity: 0.85;
+    top: 20%;
+    height: 45%;
+    width: 50%;
+    left: 25%;
+    border: 4px solid black;
+    background-color: #EDEDED;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 50;
+}
+
+.editPanel textarea {
+    border-radius: 5px;
+}
+
+.editPanel div .closeButton {
+    left: 67.5%;
+    position: fixed;
+    top: 21.5%;
+    font-size: 25px;
+    text-align: right;
+    width: 5%;
+    color: #4E4E4E;
+}
+
+.editPanel div .closeButton:hover{
+    color: #999999;
+}
+
+.showTargetDetails {
+    color: black;
+}
+
+.showTargetDetails:hover{
+    color: #6B6B6B;
+    cursor: pointer;
+}
+
+.descriptionPanel {
+    height: 100%;
+}
+
+.descriptionContents {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.descriptionContents .description {
+    width: 75%;
+    text-align: center;
+    margin-left: 12.5%;
+}
+
+.formInput {
+    width: 80%;
+}
