@@ -126,7 +126,7 @@ class RewardList extends Component {
 
     renderCompletedListItems(){      
         var rows = [];
-        for(var i=0; i<this.state.completedTargets.length; i++){
+        for(var i=0; i<this.state.claimedRewards.length; i++){
             rows.push(<RewardListItemComplete rewardItem={this.state.claimedRewards[i]} unclaimReward={this.setRewardUnclaimed} key={i} />);
         }
         return(
