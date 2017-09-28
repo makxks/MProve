@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import RewardList from './rewardList';
 
 class Rewards extends Component {
 
@@ -16,9 +17,7 @@ class Rewards extends Component {
             <div className="section">
                 <h1>Rewards</h1>
                 <hr />
-                <div className="rewards">
-                </div>
-                <button className="button">Add new reward</button>
+                <RewardList />
             </div>
         )
     };

@@ -12,8 +12,6 @@ class TargetAddTarget extends Component {
             length: "",
             points: "",
             description: "" };
-
-            //add state for subitems, so it can display correctly
     }
 
     static contextTypes = {

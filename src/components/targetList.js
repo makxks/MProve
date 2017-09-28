@@ -20,9 +20,13 @@ class TargetList extends Component {
         this.addTarget = this.addTarget.bind(this);
         this.renderTargetPanel = this.renderTargetPanel.bind(this);
         this.hideEditAddPanel = this.hideEditAddPanel.bind(this);
+        this.showRemovePanel = this.showRemovePanel.bind(this);
+        this.hideRemovePanel = this.hideRemovePanel.bind(this);
+        this.removeTarget = this.removeTarget.bind(this);
     }
 
     panelCssClass = "hidden";
+    removePanelCssClass = "hidden";
 
     setTargetComplete(target){
         var tempUncompleted = [];
@@ -66,6 +70,16 @@ class TargetList extends Component {
         this.panelCssClass = "hidden";
     }
 
+    showRemovePanel(target){
+        this.setState({ panelTarget: target });
+        this.removePanelCssClass = "";
+    }
+
+    hideRemovePanel(){
+        this.setState({ panelTarget: null });
+        this.removePanelCssClass = "hidden";
+    }
+
     addTarget(title, points, length, description, isSubtarget=false, subtargetParent=null){
         var newTarget = new Target(title, points, length, description);
         if(!isSubtarget){
@@ -86,9 +100,33 @@ class TargetList extends Component {
                     addOrEdit={this.state.panelFunction}
                     subtarget={this.state.panelTargetIsSub}
                     target={this.state.panelTarget} 
-                    hideEditAddPanel={this.hideEditAddPanel}/>
+                    hideEditAddPanel={this.hideEditAddPanel} />
             </div>
         )
+    }
+
+    renderRemovePanel(){
+        return(
+            <div className={this.removePanelCssClass}>
+                <TargetRemoveTarget
+                    target={this.state.panelTarget}
+                    hideRemovePanel={this.hideRemovePanel}
+                    removeTarget={this.removeTarget} />
+            </div>
+        )
+    }
+
+    removeTarget(target){
+        var tempList = this.state.unCompletedTargets;
+        for(var i=0; i<target.subtargets.length; i++){
+            target.subtargets.splice(i,1);
+        }
+        for(var i=0; i<tempList.length; i++){
+            if(tempList[i] == target){
+                tempList.splice(i,1);
+            }
+        }
+        this.setState({ unCompletedTargets: tempList });
     }
 
     renderListHeadings(){
@@ -97,7 +135,7 @@ class TargetList extends Component {
                 <p>Target</p>
                 <p>Time Remaining</p>
                 <p>Points</p>
-                <p>Achieved</p>
+                <p>Complete</p>
                 <p>Delete</p>
             </li>
         )
@@ -108,7 +146,7 @@ class TargetList extends Component {
             <li className="headingsComplete">
                 <p>Target</p>
                 <p>Points</p>
-                <p>Achieved</p>
+                <p>Uncomplete</p>
                 <p>Delete</p>
             </li>
         )
@@ -120,6 +158,8 @@ class TargetList extends Component {
             rows.push(<TargetListItem 
                 targetItem={this.state.unCompletedTargets[i]} 
                 completeTarget={this.setTargetComplete}
+                showRemovePanel={this.showRemovePanel}
+                hideRemovePanel={this.hideRemovePanel}
                 showEditAddPanel={this.showEditAddPanel}
                 hideEditAddPanel={this.hideEditAddPanel}
                 key={i} />);
@@ -169,6 +209,7 @@ class TargetList extends Component {
         return ( 
             <div className="targetList">
                 {this.renderTargetPanel()}
+                {this.renderRemovePanel()}
                 {this.renderList()}
                 <button className="button" onClick={() => {this.showEditAddPanel(null, "Add", false)}}>Add new target</button>
                 <hr />

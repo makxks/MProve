@@ -155,7 +155,7 @@ class TargetListItem extends Component {
                 <p>{this.state.targetItem.length}</p>
                 <p>{this.state.targetItem.points}</p>
                 <button className="glyphicon glyphicon-unchecked removeButton" onClick={() => this.props.completeTarget(this.state.targetItem)}></button>
-                <button className="glyphicon glyphicon-remove removeButton"></button>
+                <button className="glyphicon glyphicon-remove removeButton" onClick={() => this.props.showRemoveButton(this.state.targetItem)}></button>
             </li>
             {this.renderSubTargets()}
         </ul>
