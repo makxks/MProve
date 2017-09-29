@@ -1,7 +1,8 @@
 export default class Reward {
-    constructor(name, points){
+    constructor(name, points, description){
         this.name = name;
         this.points = points;
+        this.description = description;
         this.claimed = false;
     }
 
@@ -10,9 +11,10 @@ export default class Reward {
         //edit on database
     }
 
-    editReward(name, points){
+    editReward(name, points, description){
         this.name = name;
         this.points = points;
+        this.description = description;
         //edit on database
     }
 

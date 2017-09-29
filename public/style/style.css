@@ -543,3 +543,33 @@ ul {
 .formInput {
     width: 80%;
 }
+
+.editPanel div {
+    height: 100%;
+}
+
+.removePanelContents {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 10%;
+    justify-content: center;
+    height: 100%;
+    align-content: center;
+    align-items: center;
+}
+
+.mainListItem .rewardListItem p {
+    width: 26%;
+    padding-right: 3%;
+}
+
+.mainListItem .rewardListItem button {
+    width: 24%;
+    padding-left: 0.5%;
+}
+
+.mainListItem .rewardListItem button:last-child {
+    width: 24%;
+    padding-left: 3%;
+}  

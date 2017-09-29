@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import RewardList from './rewardList';
 
 class Rewards extends Component {
-
     static contextTypes = {
         router: PropTypes.object
     };

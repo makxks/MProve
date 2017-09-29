@@ -7,12 +7,12 @@
   "scripts": {
     "start1": "node ./bin/www",
     "start2": "node app.js",
-    "build": "babel ./public && webpack --config webpack.config.js --progress --profile --watch",
+    "build": "babel public && webpack --config webpack.config.js --progress --profile --watch",
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
   },
-  "author": "",
+  "author": "Max Platt",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",

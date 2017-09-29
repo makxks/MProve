@@ -3,6 +3,7 @@ import Target from '../models/target';
 import TargetListItem from './targetListItem';
 import TargetListItemComplete from './targetListItemComplete';
 import TargetAddTarget from './targetAddTarget';
+import TargetRemoveTarget from './targetRemoveTarget';
 
 class TargetList extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class TargetList extends Component {
         this.showEditAddPanel = this.showEditAddPanel.bind(this);
         this.addTarget = this.addTarget.bind(this);
         this.renderTargetPanel = this.renderTargetPanel.bind(this);
+        this.renderRemovePanel = this.renderRemovePanel.bind(this);
         this.hideEditAddPanel = this.hideEditAddPanel.bind(this);
         this.showRemovePanel = this.showRemovePanel.bind(this);
         this.hideRemovePanel = this.hideRemovePanel.bind(this);
@@ -46,8 +48,8 @@ class TargetList extends Component {
     setTargetUncomplete(target){
         var tempUncompleted = [];
         var tempCompleted = [];
-        tempCompleted = this.state.completedTargets.slice();
-        tempUncompleted = this.state.unCompletedTargets.slice();
+        tempCompleted = this.state.completedTargets;
+        tempUncompleted = this.state.unCompletedTargets;
         tempUncompleted.push(target);
         for(var i=0; i<tempCompleted.length; i++){
             if(tempCompleted[i] == target){
@@ -118,6 +120,7 @@ class TargetList extends Component {
 
     removeTarget(target){
         var tempList = this.state.unCompletedTargets;
+        var tempCompletedList = this.state.completedTargets;
         for(var i=0; i<target.subtargets.length; i++){
             target.subtargets.splice(i,1);
         }
@@ -126,7 +129,13 @@ class TargetList extends Component {
                 tempList.splice(i,1);
             }
         }
+        for(var i=0; i<tempCompletedList.length; i++){
+            if(tempCompletedList[i] == target){
+                tempCompletedList.splice(i,1);
+            }
+        }
         this.setState({ unCompletedTargets: tempList });
+        this.setState({ completedTargets: tempCompletedList });
     }
 
     renderListHeadings(){
@@ -174,7 +183,12 @@ class TargetList extends Component {
     renderCompletedListItems(){      
         var rows = [];
         for(var i=0; i<this.state.completedTargets.length; i++){
-            rows.push(<TargetListItemComplete targetItem={this.state.completedTargets[i]} uncompleteTarget={this.setTargetUncomplete} key={i} />);
+            rows.push(<TargetListItemComplete 
+                targetItem={this.state.completedTargets[i]} 
+                uncompleteTarget={this.setTargetUncomplete} 
+                showRemovePanel={this.showRemovePanel}
+                hideRemovePanel={this.hideRemovePanel} 
+                key={i} />);
         }
         return(
             <ul className="mainListComplete">

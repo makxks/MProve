@@ -97,7 +97,7 @@ class TargetListItemComplete extends Component {
                 </p>
                 <p>{this.state.targetItem.points}</p>
                 <button className="glyphicon glyphicon-check removeButton buttonComplete" onClick={() => this.props.uncompleteTarget(this.state.targetItem)}></button>
-                <button className="glyphicon glyphicon-remove removeButton buttonComplete"></button>
+                <button className="glyphicon glyphicon-remove removeButton buttonComplete" onClick={() => this.props.showRemovePanel(this.state.targetItem)}></button>
             </li>
             {this.renderSubTargets()}
         </ul>

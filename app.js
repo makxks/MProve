@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var appRoutes = require('./routes/app');
 
 var app = express();
-mongoose.connect('localhost:27017/mprove');
+//mongoose.connect('localhost:27017/mprove');
 //mongoose.connect('makks:M0nument@ds159591.mlab.com:59591/class-tracker');
 
 app.set('views', path.join(__dirname, 'views'));

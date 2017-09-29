@@ -5,6 +5,8 @@ class TargetRemoveTarget extends Component {
         super(props);
 
         this.state = {target: this.props.target};
+
+        this.removeThisTarget = this.removeThisTarget.bind(this)
     }
 
     componentWillReceiveProps(props){
@@ -14,16 +16,18 @@ class TargetRemoveTarget extends Component {
     removeThisTarget(){
         this.props.removeTarget(this.state.target);
         this.setState({ target: null });
-        this.props.hideEditAddPanel();
+        this.props.hideRemovePanel();
     }
 
     renderPanel(){
         return(
             <div>
-                <span className="glyphicon glyphicon-remove closeButton" onClick={() => this.props.hideEditAddPanel()}></span>
+                <span className="glyphicon glyphicon-remove closeButton" onClick={() => this.props.hideRemovePanel()}></span>
+                <div className="removePanelContents">
                 <h3>Are you sure you want to delete this target (and all it's subtargets)?</h3>
-                <button type="submit" className="buttonForm" onClick={() => this.props.removeTarget(this.state.target)}>Yes</button>
-                <button type="submit" className="buttonForm" onClick={() => this.props.hideEditAddPanel()}>No</button>
+                <button type="submit" className="buttonForm" onClick={() => this.removeThisTarget()}>Yes</button>
+                <button type="submit" className="buttonForm" onClick={() => this.props.hideRemovePanel()}>No</button>
+                </div>
             </div>      
         )
     }

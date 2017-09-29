@@ -24,12 +24,13 @@ class RewardList extends Component {
     }
 
     panelCssClass = "hidden";
+    removePanelCssClass = "hidden";
 
     setRewardClaimed(reward){
         var tempUnclaimed = [];
         var tempClaimed = [];
         tempClaimed = this.state.claimedRewards;
-        tempUnclaimed = this.state.unClaimedTargets;
+        tempUnclaimed = this.state.unClaimedRewards;
         tempClaimed.push(reward);
         for(var i=0; i<tempUnclaimed.length; i++){
             if(tempUnclaimed[i] == reward){
@@ -43,8 +44,8 @@ class RewardList extends Component {
     setRewardUnclaimed(reward){
         var tempUnclaimed = [];
         var tempClaimed = [];
-        tempClaimed = this.state.claimedTargets.slice();
-        tempUnclaimed = this.state.unClaimedTargets.slice();
+        tempClaimed = this.state.claimedRewards;
+        tempUnclaimed = this.state.unClaimedRewards;
         tempUnclaimed.push(reward);
         for(var i=0; i<tempClaimed.length; i++){
             if(tempClaimed[i] == reward){
@@ -56,7 +57,7 @@ class RewardList extends Component {
     }
 
     showEditAddPanel(reward, addOrEdit){
-        this.setState({ panelReward: target });
+        this.setState({ panelReward: reward });
         this.setState({ panelFunction: addOrEdit });
         this.panelCssClass = "";
     }
@@ -66,11 +67,21 @@ class RewardList extends Component {
         this.panelCssClass = "hidden";
     }
 
-    addReward(title, points){
-        var newReward = new Reward(title, points);
+    addReward(title, points, description){
+        var newReward = new Reward(title, points, description);
         var tempRewardArray = this.state.unClaimedRewards;
         tempRewardArray.push(newReward);
         this.setState({ unClaimedRewards: tempRewardArray });
+    }
+
+    showRemovePanel(reward){
+        this.setState({ panelReward: reward });
+        this.removePanelCssClass = "";
+    }
+
+    hideRemovePanel(){
+        this.setState({ panelReward: null });
+        this.removePanelCssClass = "hidden";
     }
 
     renderRewardPanel(){
@@ -87,7 +98,7 @@ class RewardList extends Component {
 
     renderListHeadings(){
         return (
-            <li className="listItem headingsComplete">
+            <li className="headingsComplete">
                 <p>Reward</p>
                 <p>Points</p>
                 <p>Claim</p>
@@ -99,7 +110,7 @@ class RewardList extends Component {
     renderCompletedListHeadings(){
         return (
             <li className="headingsComplete">
-                <p>Target</p>
+                <p>Reward</p>
                 <p>Points</p>
                 <p>Unclaim</p>
                 <p>Delete</p>
@@ -115,6 +126,7 @@ class RewardList extends Component {
                 claimReward={this.setRewardClaimed}
                 showEditAddPanel={this.showEditAddPanel}
                 hideEditAddPanel={this.hideEditAddPanel}
+                showRemovePanel={this.showRemovePanel}
                 key={i} />);
         }
         return(
@@ -163,7 +175,7 @@ class RewardList extends Component {
             <div className="targetList">
                 {this.renderRewardPanel()}
                 {this.renderList()}
-                <button className="button" onClick={() => {this.showEditAddPanel(null, "Add")}}>Add new target</button>
+                <button className="button" onClick={() => {this.showEditAddPanel(null, "Add")}}>Add new reward</button>
                 <hr />
                 <h3>Completed</h3>
                 {this.renderCompletedList()}

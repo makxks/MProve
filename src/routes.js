@@ -11,8 +11,7 @@ import Rewards from './components/rewards';
 
 export default (
 <Route path="/" component={App}>
-    <IndexRoute component={LoginButton} />
-    <Route path="/auth" component={Auth} />
+    <IndexRoute component={Home} />
     <Route path="/auth/:method" component={Auth} />
     <Route path="/:user/home" component={Home} />
     <Route path="/:user/profile" component={Profile} />
