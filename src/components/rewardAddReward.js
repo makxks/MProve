@@ -82,15 +82,15 @@ function validate(values) {
     const errors = {};
     
         if (!values.title) {
-            errors.title = 'Enter a title';
+            errors.title = 'Enter a title for this reward';
         }
     
         if (!values.points) {
-            errors.points = 'Enter some points';
+            errors.points = 'Enter the points value of this reward';
         }
 
         if (!values.description) {
-            errors.description = 'Enter a description';
+            errors.description = 'Enter a description for this reward';
         }
     
         return errors;

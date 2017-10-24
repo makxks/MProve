@@ -106,19 +106,19 @@ function validate(values) {
     const errors = {};
     
         if (!values.title) {
-            errors.title = 'Enter a title';
+            errors.title = 'Enter a title for this target';
         }
     
         if(!values.length) {
-            errors.length = 'Enter length';
+            errors.length = 'Enter the lenth of time for this target';
         }
     
         if (!values.points) {
-            errors.points = 'Enter some points';
+            errors.points = 'Enter a points value for this target';
         }
 
         if (!values.description){
-            errors.description = 'Enter a description';
+            errors.description = 'Enter a description for this target';
         }
     
         return errors;
