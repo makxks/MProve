@@ -50,7 +50,7 @@ class About extends Component {
                     </div>
                     <div className="aboutSection">
                         <div>
-                            <p>Image of reward section here</p>
+                            <img src={'/images/rewards..png'} width="525px" height="225px"></img>
                         </div>
                         <div>
                             <p>You can also add some rewards if you want to. Again these should be things you want, not things you need. Once you have earned enough points you can
