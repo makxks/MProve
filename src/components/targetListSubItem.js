@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import Subtarget from '../models/subtarget';
+import User from '../models/user';
 
 class TargetListSubItem extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { completed: props.subTarget.completed };
+        this.state = { completed: props.subTarget.completed, overdue: ((props.subTarget.length) < (new Date())) };
 
         this.completeSubtask = this.completeSubtask.bind(this);
         this.unCompleteSubtask = this.unCompleteSubtask.bind(this);
@@ -14,17 +16,60 @@ class TargetListSubItem extends Component {
         this.renderItemPoints = this.renderItemPoints.bind(this);
     }
 
+    overduePanelStyle = "";
+
     componentWillReceiveProps(props){
-        this.setState({ completed: props.subTarget.completed })
+        this.setState({ completed: props.subTarget.completed });
+        var time = new Date();
+        if(props.subTarget.length < time){
+            this.setState({ overdue: true });
+        }
+        else{
+            this.setState({ overdue: false });
+        }
+        if(this.state.overdue){
+            this.overduePanelStyle = "overduePanelSub";
+        }
+        else{
+            this.overduePanelStyle = "";
+        }
+    }
+
+    componentWillMount(){
+        var time = new Date();
+        if(this.props.subTarget.length < time){
+            this.overduePanelStyle = "overduePanelSub";
+        }
+        else{
+            this.overduePanelStyle = "";
+        }
     }
 
     completeSubtask(){
+        this.props.completeSubTarget(this.props.subTarget, true);
         this.props.subTarget.completed = true;
+        this.props.subTarget.completeUncompleteSubtarget(true);
+        var points = parseInt(localStorage.getItem('points')) + parseInt(this.props.subTarget.points);
+        
+        localStorage.setItem('points', points);
+        localStorage.setItem('totalPoints', parseInt(localStorage.getItem('totalPoints')) + parseInt(this.props.subTarget.points));
+
+        var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
+        user.addPoints(parseInt(this.props.subTarget.points));
         this.setState({ completed: true });
     }
 
     unCompleteSubtask(){
+        this.props.uncompleteSubTarget(this.props.subTarget, true);
         this.props.subTarget.completed = false;
+        this.props.subTarget.completeUncompleteSubtarget(false);
+        var points = parseInt(localStorage.getItem('points')) - parseInt(this.props.subTarget.points);
+        
+        localStorage.setItem('points', points);
+        localStorage.setItem('totalPoints', parseInt(localStorage.getItem('totalPoints')) - parseInt(this.props.subTarget.points));
+
+        var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
+        user.usePoints(parseInt(this.props.subTarget.points));
         this.setState({ completed: false });
     }
 
@@ -42,17 +87,45 @@ class TargetListSubItem extends Component {
     }
 
     renderItemName(){
-        return(
-            <p> {this.props.subTarget.name}
-                <span className="glyphicon glyphicon-pencil pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.props.subTarget, "Edit", true)}></span>
-            </p>
-        )
+        var time = new Date();
+        if((this.props.subTarget.length < time) && !this.state.completed){
+            return(
+                <p><b> {this.props.subTarget.name} </b>
+                    <span className="glyphicon glyphicon-pencil pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.props.subTarget, "Edit", true)}></span>
+                </p>
+            )
+        }
+        else{
+            return(
+                <p> {this.props.subTarget.name}
+                    <span className="glyphicon glyphicon-pencil pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.props.subTarget, "Edit", true)}></span>
+                </p>
+            )
+        }
     }
 
+    pad(num, size) {
+		var s = num+"";
+		while(s.length < size){
+			s = "0" + s;
+		}
+		return s;
+	}
+
     renderItemLength(){
-        return(
-            <p>{this.props.subTarget.length}</p>
-        )
+        var time = new Date();
+        var due = new Date(this.props.subTarget.length);
+        var dateMessage = due.toLocaleDateString() + " " + this.pad(due.getHours(),2) + ":" + this.pad(due.getMinutes(),2);
+        if(this.props.subTarget.length < time){
+            return(
+                <p className={this.overdueStyle}><b>!! {dateMessage} !!</b></p>
+            )
+        }
+        else{
+            return(
+                <p>{dateMessage}</p>
+            )
+        }
     }
 
     renderItemPoints(){
@@ -60,6 +133,7 @@ class TargetListSubItem extends Component {
             <p>{this.props.subTarget.points}</p>
         )
     }
+    
 
     render(){
         var cssClass = "";
@@ -70,7 +144,7 @@ class TargetListSubItem extends Component {
             cssClass = "";
         }
         return(
-            <li className={cssClass + " listItem subListItem"}>
+            <li className={cssClass + this.overduePanelStyle +  " listItem subListItem"}>
                 {this.renderItemName()}
                 {this.renderItemLength()}
                 {this.renderItemPoints()}

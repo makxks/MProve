@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Subtarget from '../models/subtarget';
+import User from '../models/user';
 
 class TargetListSubItemComplete extends Component {
     constructor(props) {
@@ -18,12 +20,30 @@ class TargetListSubItemComplete extends Component {
     }
 
     completeSubtask(){
+        this.props.completeSubTarget(this.props.subTarget, true);
         this.props.subTarget.completed = true;
+        this.props.subTarget.completeUncompleteSubtarget(true);
+        var points = parseInt(localStorage.getItem('points')) + parseInt(this.props.subTarget.points);
+        
+        localStorage.setItem('points', points);
+        localStorage.setItem('totalPoints', parseInt(localStorage.getItem('totalPoints')) + parseInt(points));
+
+        var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
+        user.addPoints(this.props.subTarget.points);
         this.setState({ completed: true });
     }
 
     unCompleteSubtask(){
+        this.props.uncompleteSubTarget(this.props.subTarget, true);
         this.props.subTarget.completed = false;
+        this.props.subTarget.completeUncompleteSubtarget(false);
+        var points = parseInt(localStorage.getItem('points')) - parseInt(this.props.subTarget.points);
+        
+        localStorage.setItem('points', points);
+        localStorage.setItem('totalPoints', parseInt(localStorage.getItem('totalPoints')) - parseInt(points));
+       
+        var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
+        user.usePoints(this.props.subTarget.points);
         this.setState({ completed: false });
     }
 

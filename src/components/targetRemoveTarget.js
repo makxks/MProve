@@ -21,7 +21,7 @@ class TargetRemoveTarget extends Component {
 
     renderPanel(){
         return(
-            <div>
+            <div className="editPanelForm">
                 <span className="glyphicon glyphicon-remove closeButton" onClick={() => this.props.hideRemovePanel()}></span>
                 <div className="removePanelContents">
                 <h3>Are you sure you want to delete this target (and all it's subtargets)?</h3>

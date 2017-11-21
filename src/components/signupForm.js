@@ -1,13 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { Link } from 'react-router';
+import Auth from '../auth/auth';
+import User from '../models/user';
 
 class SignupForm extends Component {
+    auth = new Auth();
+
     static contextTypes = {
         router: PropTypes.object
     };
 
     onSubmit(props) {
+        var user = new User(props.email, props.username);
+        this.auth.signup(props.email, props.password, user);
         this.context.router.push('/'); 
     }
 
@@ -26,7 +32,7 @@ class SignupForm extends Component {
                     </div>
                 </div>
                 <div className={`form-group formInput ${username.touched && username.invalid ? 'has-danger' : ''}`}>
-                    <input type="text" className="form-control commentInput" {...username} />
+                    <input type="text" className="form-control commentInput username" {...username} />
                     <label>Choose a username</label>
                     <div className="text-help">
                         {username.touched ? username.error : ''}

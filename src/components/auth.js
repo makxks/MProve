@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import LoginForm from './loginForm';
 import SignupForm from './signupForm';
+import Auth from '../auth/auth';
 
-var windowValue = "login";
-var signedIn = false;
+class AuthComponent extends Component {
+    auth = new Auth();
 
-class Auth extends Component {
     static contextTypes = {
         router: PropTypes.object
     };
@@ -18,7 +18,11 @@ class Auth extends Component {
     }
 
     getSignedIn() {
-        return signedIn;
+        return this.auth.isAuthenticated();
+    }
+
+    getSignedInUser() {
+        return this.auth.loggedInUser;
     }
 
     goHome() {
@@ -36,7 +40,7 @@ class Auth extends Component {
     }
 
     renderSignInOut() {
-        if(signedIn){
+        if(this.getSignedIn()){
             return (
                 <li><Link className="button authButtons" to={"/auth/logout"}>Logout</Link></li>
             )
@@ -55,11 +59,8 @@ class Auth extends Component {
     }
 
     signOut() {
+        auth.logout();
         this.context.router.push('/');
-    }
-
-    signIn() {
-
     }
 
     renderAuth() {
@@ -85,9 +86,9 @@ class Auth extends Component {
 
     render() {
         return (
-        <div>
+        <div className="authAll">
             <div>
-            {this.renderHomeButton()}
+                {this.renderHomeButton()}
                 <header>
                     <nav>
                         <ul className="nav nav-justified">
@@ -103,4 +104,4 @@ class Auth extends Component {
     }
 }
 
-export default Auth;
+export default AuthComponent;

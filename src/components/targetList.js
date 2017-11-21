@@ -1,11 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import Target from '../models/target';
+import Subtarget from '../models/subtarget';
+import User from '../models/user';
 import TargetListItem from './targetListItem';
 import TargetListItemComplete from './targetListItemComplete';
 import TargetAddTarget from './targetAddTarget';
 import TargetRemoveTarget from './targetRemoveTarget';
+import { connect } from 'react-redux';
+import { fetchTargets } from '../actions/index';
+import { fetchSubtargets } from '../actions/index';
+import Auth from '../auth/auth';
 
 class TargetList extends Component {
+    auth = new Auth;
+
     constructor(props) {
         super(props);
 
@@ -18,46 +26,131 @@ class TargetList extends Component {
         this.setTargetUncomplete = this.setTargetUncomplete.bind(this);
 
         this.showEditAddPanel = this.showEditAddPanel.bind(this);
-        this.addTarget = this.addTarget.bind(this);
-        this.renderTargetPanel = this.renderTargetPanel.bind(this);
-        this.renderRemovePanel = this.renderRemovePanel.bind(this);
         this.hideEditAddPanel = this.hideEditAddPanel.bind(this);
+        this.renderTargetPanel = this.renderTargetPanel.bind(this);
+        this.renderRemovePanel = this.renderRemovePanel.bind(this);    
         this.showRemovePanel = this.showRemovePanel.bind(this);
         this.hideRemovePanel = this.hideRemovePanel.bind(this);
+        this.addTarget = this.addTarget.bind(this);
         this.removeTarget = this.removeTarget.bind(this);
     }
-
+    
     panelCssClass = "hidden";
     removePanelCssClass = "hidden";
 
-    setTargetComplete(target){
-        var tempUncompleted = [];
+    componentWillMount() {
         var tempCompleted = [];
-        tempCompleted = this.state.completedTargets;
-        tempUncompleted = this.state.unCompletedTargets;
-        tempCompleted.push(target);
-        for(var i=0; i<tempUncompleted.length; i++){
-            if(tempUncompleted[i] == target){
-                tempUncompleted.splice(i,1);
-                break;
-            }
-        }
-        this.setState({ unCompletedTargets: tempUncompleted, completedTargets: tempCompleted });
+        var tempUncompleted = [];
+
+        this.props.fetchTargets(localStorage.getItem('email'))
+            .then((response) => {
+                if(response.payload){
+                    for(var i=0; i<response.payload.length; i++){
+                        var newTarget = new Target(
+                            response.payload[i].name,
+                            response.payload[i].points,
+                            response.payload[i].length,
+                            response.payload[i].user,
+                            response.payload[i].description,
+                            response.payload[i].complete,
+                            []
+                        );
+                        if(!response.payload[i].completed){
+                            tempUncompleted.push(newTarget);
+                        }
+                        else{
+                            tempCompleted.push(newTarget);
+                        }
+                        var locali = i;
+                        this.props.fetchSubtargets(localStorage.getItem('email'), response.payload[locali].name)
+                        .then((response1) => {
+                            if(response1.payload){
+                                for(var j=0; j<response1.payload.length; j++){
+                                    var newSubtarget = new Subtarget(
+                                        response1.payload[j].name,
+                                        response1.payload[j].points,
+                                        response1.payload[j].length,
+                                        response1.payload[j].parentName,
+                                        response1.payload[j].user,
+                                        response1.payload[j].description,
+                                        response1.payload[j].completed
+                                    )
+                                    for(var k = 0; k<tempUncompleted.length; k++){
+                                        if(response1.payload[j].parentName == tempUncompleted[k].name){
+                                            tempUncompleted[k].subtargets.push(newSubtarget);
+                                        }
+                                    }
+                                    for(var l = 0; l<tempCompleted.length; l++){
+                                        if(response1.payload[j].parentName == tempCompleted[l].name){
+                                            tempCompleted[l].subtargets.push(newSubtarget);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            this.setState({ unCompletedTargets: tempUncompleted, completedTargets: tempCompleted });
+                        });
+                    }
+                }
+            })
     }
 
-    setTargetUncomplete(target){
-        var tempUncompleted = [];
-        var tempCompleted = [];
-        tempCompleted = this.state.completedTargets;
-        tempUncompleted = this.state.unCompletedTargets;
-        tempUncompleted.push(target);
-        for(var i=0; i<tempCompleted.length; i++){
-            if(tempCompleted[i] == target){
-                tempCompleted.splice(i,1);
-                break;
-            }
+    setTargetComplete(target, isSubtarget=false){
+        if(isSubtarget){
+            this.setState({ unCompletedTargets: this.state.unCompletedTargets });
         }
-        this.setState({ unCompletedTargets: tempUncompleted, completedTargets: tempCompleted });
+        else{
+            var tempUncompleted = [];
+            var tempCompleted = [];
+            tempCompleted = this.state.completedTargets;
+            tempUncompleted = this.state.unCompletedTargets;
+            tempCompleted.push(target);
+            for(var i=0; i<tempUncompleted.length; i++){
+                if(tempUncompleted[i] == target){
+                    tempUncompleted.splice(i,1);
+                    break;
+                }
+            }
+            target.completeUncompleteTarget(true);
+            var points = parseInt(localStorage.getItem('points')) + parseInt(target.points);
+            
+            localStorage.setItem('points', points);
+            localStorage.setItem('targetsReached', parseInt(localStorage.getItem('targetsReached')) + 1);
+            localStorage.setItem('totalPoints', parseInt(localStorage.getItem('totalPoints')) + target.points);
+
+            var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
+            user.addPoints(target.points);
+            this.setState({ unCompletedTargets: tempUncompleted, completedTargets: tempCompleted });
+        }
+    }
+
+    setTargetUncomplete(target, isSubtarget=false){
+        if(isSubtarget){
+            this.setState({ unCompletedTargets: this.state.unCompletedTargets });
+        }
+        else{
+            var tempUncompleted = [];
+            var tempCompleted = [];
+            tempCompleted = this.state.completedTargets;
+            tempUncompleted = this.state.unCompletedTargets;
+            tempUncompleted.push(target);
+            for(var i=0; i<tempCompleted.length; i++){
+                if(tempCompleted[i] == target){
+                    tempCompleted.splice(i,1);
+                    break;
+                }
+            }
+            target.completeUncompleteTarget(false);
+            var points = parseInt(localStorage.getItem('points')) - parseInt(target.points);
+            
+            localStorage.setItem('points', points);
+            localStorage.setItem('targetsReached', parseInt(localStorage.getItem('targetsReached')) - 1);
+            localStorage.setItem('totalPoints', parseInt(localStorage.getItem('totalPoints')) - target.points);
+
+            var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
+            user.usePoints(target.points);
+            this.setState({ unCompletedTargets: tempUncompleted, completedTargets: tempCompleted });
+        }
     }
 
     showEditAddPanel(target, addOrEdit, isSub){
@@ -83,14 +176,24 @@ class TargetList extends Component {
     }
 
     addTarget(title, points, length, description, isSubtarget=false, subtargetParent=null){
-        var newTarget = new Target(title, points, length, description);
         if(!isSubtarget){
+            var newTarget = new Target(title, points, length, localStorage.getItem('username'), description);
             var tempTargetArray = this.state.unCompletedTargets;
             tempTargetArray.push(newTarget);
+            newTarget.createDBTarget();
             this.setState({ unCompletedTargets: tempTargetArray });
         }
         else if(isSubtarget){
-            subtargetParent.addSubtask(newTarget);        
+            var tempTargets = this.state.unCompletedTargets;
+            var newSubtarget = new Subtarget(title, points, length, subtargetParent.name, localStorage.getItem('username'), description, false);
+            newSubtarget.addDBSubtarget();
+            subtargetParent.subtargets.push(newSubtarget);
+            for(var i=0; i<tempTargets.length; i++){
+                if(subtargetParent.name == tempTargets[i].name){
+                    tempTargets[i] = subtargetParent;
+                }
+            }
+            this.setState({ unCompletedTargets: tempTargets });
         }
     }
 
@@ -121,6 +224,7 @@ class TargetList extends Component {
     removeTarget(target){
         var tempList = this.state.unCompletedTargets;
         var tempCompletedList = this.state.completedTargets;
+        target.deleteTarget();
         for(var i=0; i<target.subtargets.length; i++){
             target.subtargets.splice(i,1);
         }
@@ -142,7 +246,7 @@ class TargetList extends Component {
         return (
             <li className="listItem headings">
                 <p>Target</p>
-                <p>Time Remaining</p>
+                <p>Due Date</p>
                 <p>Points</p>
                 <p>Complete</p>
                 <p>Delete</p>
@@ -167,6 +271,7 @@ class TargetList extends Component {
             rows.push(<TargetListItem 
                 targetItem={this.state.unCompletedTargets[i]} 
                 completeTarget={this.setTargetComplete}
+                uncompleteTarget={this.setTargetUncomplete}
                 showRemovePanel={this.showRemovePanel}
                 hideRemovePanel={this.hideRemovePanel}
                 showEditAddPanel={this.showEditAddPanel}
@@ -184,7 +289,8 @@ class TargetList extends Component {
         var rows = [];
         for(var i=0; i<this.state.completedTargets.length; i++){
             rows.push(<TargetListItemComplete 
-                targetItem={this.state.completedTargets[i]} 
+                targetItem={this.state.completedTargets[i]}
+                completeTarget={this.setTargetComplete}
                 uncompleteTarget={this.setTargetUncomplete} 
                 showRemovePanel={this.showRemovePanel}
                 hideRemovePanel={this.hideRemovePanel} 
@@ -219,9 +325,23 @@ class TargetList extends Component {
         )
     }
 
+    renderUserAndPoints(){
+        if(localStorage.getItem('email')){
+          return (
+            <div className="user">
+              <h4 className="username">Hi {localStorage.getItem('username')}</h4><h4 className="userPoints">You have {localStorage.getItem('points')} points</h4>
+            </div>
+          )
+        }
+        else{
+          return;
+        }
+    }
+
     render() {
         return ( 
             <div className="targetList">
+                {this.renderUserAndPoints()}
                 {this.renderTargetPanel()}
                 {this.renderRemovePanel()}
                 {this.renderList()}
@@ -234,4 +354,8 @@ class TargetList extends Component {
     };
 }
 
-export default TargetList;
+function mapStateToProps(state) {
+    return { targets: state.targets.all, subtargets: state.subtargets.all };
+};
+
+export default connect(mapStateToProps, { fetchTargets, fetchSubtargets })(TargetList);

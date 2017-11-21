@@ -1,15 +1,38 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { Link } from 'react-router';
+import Auth from '../auth/auth';
+import PasswordResetForm from './passwordResetForm';
 
 class LoginForm extends Component {
-    static contextTypes = {
-        router: PropTypes.object
-    };
+    auth = new Auth();
+
+    constructor(props) {
+        super(props);
+
+        this.state = { panelCssClass: "hidden" };
+    }
 
     onSubmit(props) {
-        
-        this.context.router.push('/');
+        this.auth.login(props.email, props.password);
+    }
+
+    showResetPanel(){
+        this.setState({ panelCssClass: "" });
+    }
+
+    hideResetPanel(){
+        this.setState({ panelCssClass: "hidden" });
+    }
+
+    renderPasswordResetForm(){
+        return (
+            <div className={this.state.panelCssClass}>
+                <PasswordResetForm 
+                    hidePanel={this.hideResetPanel.bind(this)}
+                />
+            </div>
+        )
     }
 
     loginForm(){
@@ -34,16 +57,19 @@ class LoginForm extends Component {
                     </div>
                 </div>
                 <button type="submit" className="primaryButton">Submit</button>
+                <button className="primaryButton" onClick={() => this.showResetPanel()}>Reset Password</button>
             </form>
         </div>
         );
         
     }
 
+    //add password reset form
     render() {
         return (
             <div className="commentInput">
                 {this.loginForm()}
+                {this.renderPasswordResetForm()}
             </div>
         );
     }

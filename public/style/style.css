@@ -1,10 +1,16 @@
 form {
     margin: 5px;
-    height: 80%;
+    height: 90%;
+    margin-top: 2%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.rewardTargetContainer {
+    height: 100%;
+    width: 100%;
 }
 
 input {
@@ -15,6 +21,10 @@ input {
 
 input[type=text]{
     text-align: center;
+}
+
+.authForm input[type=text]{
+    text-align: left;
 }
 
 .btn {
@@ -30,6 +40,12 @@ form h3 {
     text-align: center;
     margin: 10px;
     margin-top: 20px;
+}
+
+.formTA {
+    width: 80%;
+    height: 50%;
+    border: 2px solid black;
 }
 
 html, body {
@@ -70,6 +86,14 @@ h1 {
     margin: 5px 0;
 }
 
+.section .profile hr {
+    margin: 0;
+}
+
+.section .profile h4 {
+    margin: 0;
+}
+
 .mainButtonGroup {
     display: flex;
     flex-direction: row;
@@ -79,7 +103,7 @@ h1 {
 }
 
 .mainButton {
-    margin-top: 260px;
+    margin-top: 22%;
     height: 200px;
     width: 260px;
     border: #A97023 4px solid;
@@ -89,16 +113,77 @@ h1 {
     color: white;
 }
 
-.mainButton:hover {
+.aboutButton {
+    margin-top: 3%;
+    margin-left: 20%;
+    height: 35px;
+    width: 60%;
+    border: #A97023 2px solid;
+    border-radius: 15px;
+    background-color: #A97023;
+    font-size: 20px;
+    color: white;
+}
+
+.mainButton:hover, .aboutButton:hover {
     border: #C98529 4px solid;
     background-color: #EEEEEE;
     color: #C98529;
 }
 
-.mainButton:active {
+.mainButton:active, .aboutButton:active {
     border: #805419 4px solid;
     background-color: white;
     color: #1F1F1F;
+}
+
+.aboutButton:hover {
+    border: #C98529 2px solid;
+}
+
+.aboutButton:active {
+    border: #805419 2px solid;
+}
+
+.aboutContainer {
+    height: 110%;
+    width: 100%;
+    margin-bottom: 5%;
+    padding-top: -5%;
+    padding-bottom: 5%;
+}
+
+.aboutDescription {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.aboutSection {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 2%;
+}
+
+.aboutSection div {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 16px;
+}
+
+.aboutSection  .narrow {
+    width: 70%;
+    margin-left: 15%;
 }
 
 .appContainer .homeButton {
@@ -186,6 +271,7 @@ h1 {
 .targets, .rewards {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 .mainList, .mainListComplete {
@@ -193,23 +279,72 @@ h1 {
 }
 
 .profile {
-    height: 500px;
     min-height: 90%;
+    max-height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
+}
+
+.user {
+    width: 30%;
+    margin-left: 70%;
+    margin-bottom: -40px;
+    padding-top: -20px;
+}
+
+.username {
+    float: left;
+    text-align: center;
+}
+
+.userPoints {
+    float: right;
+    text-align: center;
+}
+
+.answer {
+    float: right;
+    text-align: right;
+}
+
+.answerButton {
+    width: 20%;
+    height: 35px;
+    justify-content: right;
+    margin-top: -5px;
+    border: #A97023 2px solid;
+    background-color: #A97023;
+    font-size: 16px;
+    color: white;
+    border-radius: 5px;
+}
+
+.answerButton:hover {
+    border: #C98529 2px solid;
+    background-color: #EEEEEE;
+    color: #C98529;
+}
+
+.answerButton:active {
+    border: #A97023 2px solid;
+    background-color: #DDDDDD;
+    color: #A97023;
 }
 
 .appContainer .logo {
-    width: 390px;
+    width: 290px;
     color: #A97023;
-    margin: -10px 0;
+    margin-top: 45px;
+    font-size: 90px;
+    margin-left: -5%;
 }
 
-.appContainer .logo h1 {
-    font-size: 90px;
-    width: 390px;
+.appContainer .logoImage {
+    width: 290px;
+    margin-top: 45px;
+    left: -5%;
 }
 
 .appContainer a:hover, .appContainer a:focus, .appContainer a:active {
@@ -218,7 +353,8 @@ h1 {
 
 .tagline {
     float: right;
-    margin-top: 9px;
+    margin-top: 36px;
+    margin-left: 2%;
 }
 
 .tagline p {
@@ -236,6 +372,7 @@ h1 {
     margin-bottom: -10px;
     height: 10%;
 }
+
 
 .authForm {
     height: 550px;
@@ -290,7 +427,7 @@ h1 {
 }
 
 .headings, .headingsComplete {
-    background-color: #FED194;
+    background-color: #C98529;
     min-height: 15%;
 }
 
@@ -308,6 +445,10 @@ h1 {
 .listItem p:first-child {
     width: 30%;
     text-align: left;
+}
+
+.listItem p:nth-child(2) {
+    margin-left: 2%;
 }
 
 .headingsComplete p {
@@ -347,6 +488,8 @@ h1 {
 
 .mainListItemContainer:nth-child(odd){
     background-color: #EDEDED;
+    border: #EDEDED 2px solid;
+    border-radius: 5px;
 }
 
 .mainListItemContainer:nth-child(odd) button{
@@ -361,6 +504,8 @@ h1 {
 
 .mainListItemContainer:nth-child(even) {
     background-color: #FED194;
+    border: #FED194 2px solid;
+    border-radius: 5px;
 }
 
 .mainListItemContainer:nth-child(even) button {
@@ -484,9 +629,9 @@ ul {
 
 .editPanel {
     position: fixed;
-    opacity: 0.85;
-    top: 20%;
-    height: 45%;
+    opacity: 0.9;
+    top: 10%;
+    height: 75%;
     width: 50%;
     left: 25%;
     border: 4px solid black;
@@ -496,22 +641,33 @@ ul {
     z-index: 50;
 }
 
+.errorPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+}
+
 .editPanel textarea {
     border-radius: 5px;
 }
 
-.editPanel div .closeButton {
+.editPanel .editPanelForm .closeButton, .editPanel .descriptionPanel .closeButton, .editPanel .errorPanel .closeButton {
     left: 67.5%;
     position: fixed;
-    top: 21.5%;
+    top: 12.5%;
     font-size: 25px;
     text-align: right;
     width: 5%;
     color: #4E4E4E;
 }
 
-.editPanel div .closeButton:hover{
+.editPanel .editPanelForm .closeButton:hover, .editPanel .descriptionPanel .closeButton:hover, .editPanel .errorPanel .closeButton:hover {
     color: #999999;
+}
+
+.editPanel .editPanelForm .closeButton:active, .editPanel .descriptionPanel .closeButton:active, .editPanel .errorPanel .closeButton:active {
+    color: #4E4E4E;
 }
 
 .showTargetDetails {
@@ -544,7 +700,7 @@ ul {
     width: 80%;
 }
 
-.editPanel div {
+.editPanel .editPanelForm {
     height: 100%;
 }
 
@@ -573,3 +729,126 @@ ul {
     width: 24%;
     padding-left: 3%;
 }  
+
+.selectLabels, .selectInputs{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    width: 80%;
+    margin: 0 5px;
+}
+
+.selectLabels {
+    justify-content: space-around;
+}
+
+.selectLabels :first-child{
+    margin-left: 2%;
+}
+
+.selectLabels :nth-child(2){
+    margin-left: 4%;
+}
+
+.selectLabels :nth-child(3){
+    margin-left: 6%;
+}
+
+.selectLabels :last-child{
+    margin-right: 3%;
+}
+
+.selectInputs {
+    margin: 15px 0;
+}
+
+select {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 15px;
+    height: 50px;
+    margin: 0 5px;
+}
+
+.mainList .overduePanel {
+    border: #550005 2px solid;
+    color: white;
+}
+
+.mainList .overduePanel:nth-child(odd){
+    background-color: #810009;
+}
+
+.mainList .overduePanel:nth-child(odd) button{
+    background-color: #810009;
+}
+
+.mainList .overduePanel:nth-child(even) {
+    background-color: #b3303d;
+}
+
+.mainList .overduePanel:nth-child(even) button {
+    background-color: #b3303d;
+}
+
+.appContainer .mainListItemContainer>.mainListItem .subList .overduePanelSub:nth-child(even) {
+    background-color: #5f0109;
+    color: white;
+}
+
+.appContainer .mainListItemContainer>.mainListItem .subList .overduePanelSub:nth-child(even) button {
+    background-color: #5f0109;
+    color: white;
+}
+
+.appContainer .mainListItemContainer>.mainListItem .subList .overduePanelSub:nth-child(even) button:hover {
+    background-color: #5f0109;
+    color: grey;
+}
+
+.appContainer .mainListItemContainer>.mainListItem .subList .overduePanelSub:nth-child(odd) {
+    background-color: #975056;
+    color: white;
+}
+
+.appContainer .mainListItemContainer>.mainListItem .subList .overduePanelSub:nth-child(odd) button {
+    background-color: #975056;
+    color: white;
+}
+
+.appContainer .mainListItemContainer>.mainListItem .subList .overduePanelSub:nth-child(odd) button:hover {
+    background-color: #975056;
+    color: grey;
+}
+
+.overduePanel .showTargetDetails {
+    color: white;
+}
+
+.m {
+    width: 201px;
+    height: 267px;
+    overflow: hidden;
+    float:left;
+    position: absolute;
+    left: 23%;
+}
+
+.mMask {
+    height: 88px;
+    overflow: hidden;
+    position: relative;
+}
+
+.m:hover {
+    top: -88px;
+}
+
+.m:active {
+    top: -177px;
+}
+
+.authAll {
+    padding-top: 5%;
+}

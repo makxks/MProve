@@ -6,7 +6,7 @@ class TargetListItem extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { targetItem: props.targetItem, showingSubtasks: true, showingDescription: false };
+        this.state = { targetItem: props.targetItem, showingSubtasks: true, showingDescription: false, overdue: false };
 
         this.renderTarget = this.renderTarget.bind(this);
         this.renderSubTargets = this.renderSubTargets.bind(this);
@@ -18,12 +18,39 @@ class TargetListItem extends Component {
         this.showDescription = this.showDescription.bind(this);
         this.hideDescription = this.hideDescription.bind(this);
         this.renderDescriptionPanel = this.renderDescriptionPanel.bind(this);
+        this.renderDueDate = this.renderDueDate.bind(this);
+        this.pad = this.pad.bind(this);
+        this.renderTargetName = this.renderTargetName.bind(this);
     }
 
     descriptionPanelCssClass = "hidden";
+    overdueStylePanel = "";
 
     componentWillReceiveProps(props){
         this.setState({ targetItem: props.targetItem });
+        var time = Date.now();
+        var due = new Date(props.targetItem.length);
+        if(due.getTime() > time){
+            this.setState({ overdue: false });
+            this.overdueStylePanel = "";
+        }
+        else{
+            this.setState({ overdue: true });
+            this.overdueStylePanel = "overduePanel";
+        }
+    }
+
+    componentWillMount(){
+        var time = Date.now();
+        var due = new Date(this.state.targetItem.length);
+        if(due.getTime() > time){
+            this.setState({ overdue: false });
+            this.overdueStylePanel = "";
+        }
+        else{
+            this.setState({ overdue: true });
+            this.overdueStylePanel = "overduePanel";
+        }
     }
 
     showSubList(){
@@ -48,7 +75,9 @@ class TargetListItem extends Component {
             rows.push(<TargetListSubItem 
                 subTarget={this.state.targetItem.subtargets[i]} 
                 removeTarget={this.removeSubTarget} 
-                showEditAddPanel={this.props.showEditAddPanel} 
+                showEditAddPanel={this.props.showEditAddPanel}
+                completeSubTarget={this.props.completeTarget}
+                uncompleteSubTarget={this.props.uncompleteTarget}
                 key={i} />);
         }
         var cssClass = "";
@@ -73,6 +102,7 @@ class TargetListItem extends Component {
                 break;
             }
         }
+        subtarget.deleteSubtarget();
         this.setState({ targetItem: tempTargetItem });
     }
 
@@ -102,14 +132,66 @@ class TargetListItem extends Component {
         this.setState({ targetItem: tempTargetItem })
     }
 
-    renderDescriptionPanel(){
+    pad(num, size) {
+		var s = num+"";
+		while(s.length < size){
+			s = "0" + s;
+		}
+		return s;
+	}
+
+    renderDueDate(){
+        var time = Date.now();
+        var due = new Date(this.state.targetItem.length);
+        var dateMessage = due.toLocaleDateString() + " " + this.pad(due.getHours(),2) + ":" + this.pad(due.getMinutes(),2);
+        if(due.getTime() > time){
+            return(
+                <p>{dateMessage}</p>
+            )
+        }
+        else {
+            return(
+                <p><b>!! {dateMessage} !!</b></p>
+            )
+        }
+    }
+
+    renderTargetName(){
+        if(this.state.overdue == true){
+            return (
+                <p><span className="showTargetDetails" onClick={() => this.showDescription()}><b> {this.state.targetItem.name}</b></span>
+                    <span className={"glyphicon glyphicon-time"}></span>
+                    {this.renderShowButton()}
+                    {this.renderHideButton()}
+                    <span className="glyphicon glyphicon-plus pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.state.targetItem, "Add", true)}></span>
+                    <span className="glyphicon glyphicon-pencil pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.state.targetItem, "Edit", false)}></span>
+                </p>
+            )
+        }
+        else{
+            return (
+                <p><span className="showTargetDetails" onClick={() => this.showDescription()}> {this.state.targetItem.name}</span>
+                    {this.renderShowButton()}
+                    {this.renderHideButton()}
+                    <span className="glyphicon glyphicon-plus pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.state.targetItem, "Add", true)}></span>
+                    <span className="glyphicon glyphicon-pencil pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.state.targetItem, "Edit", false)}></span>
+                </p>
+            )
+        }
+    }
+
+    renderDescriptionPanel(){      
         return (
             <div className="descriptionPanel">
                 <span className="glyphicon glyphicon-remove closeButton" onClick={() => this.hideDescription()}></span>
                 <div className="descriptionContents">
+                    <h3>Target Name</h3>
                     <h3>{this.state.targetItem.name}</h3>
-                    <h4>{this.state.targetItem.length}</h4>
+                    <h3>Due Date</h3>
+                    <h4>{this.renderDueDate()}</h4>
+                    <h3>Target Points</h3>
                     <h4>{this.state.targetItem.points} points</h4>
+                    <h3>Target Description</h3>
                     <p className="description">{this.state.targetItem.description}</p>
                 </div>
             </div>
@@ -146,13 +228,8 @@ class TargetListItem extends Component {
         return(
         <ul className="mainListItem">
             <li className="listItem">
-                <p><span className="showTargetDetails" onClick={() => this.showDescription()}>{this.state.targetItem.name}</span>
-                    {this.renderShowButton()}
-                    {this.renderHideButton()}
-                    <span className="glyphicon glyphicon-plus pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.state.targetItem, "Add", true)}></span>
-                    <span className="glyphicon glyphicon-pencil pull-right targetButtons" onClick={() => this.props.showEditAddPanel(this.state.targetItem, "Edit", false)}></span>
-                </p>
-                <p>{this.state.targetItem.length}</p>
+                {this.renderTargetName()}
+                {this.renderDueDate()}
                 <p>{this.state.targetItem.points}</p>
                 <button className="glyphicon glyphicon-unchecked removeButton" onClick={() => this.props.completeTarget(this.state.targetItem)}></button>
                 <button className="glyphicon glyphicon-remove removeButton" onClick={() => this.props.showRemovePanel(this.state.targetItem)}></button>
@@ -170,7 +247,7 @@ class TargetListItem extends Component {
             this.descriptionPanelCssClass = "hidden";
         }
         return (
-            <ul className="mainListItemContainer">
+            <ul className={"mainListItemContainer " + this.overdueStylePanel}>
                 {this.renderTarget()}
                 <div className={this.descriptionPanelCssClass + " editPanel"}>
                     {this.renderDescriptionPanel()}

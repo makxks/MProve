@@ -1,23 +1,39 @@
 import axios from 'axios';
 
-export default class Target {
-    constructor(name, points, length, username, description="", completed=false, subtargets=[]){
+export default class Subtarget {
+    constructor(name, points, length, parentName, username, description="", completed=false){
         this.name = name;
         this.points = points;
         this.length = length;
-        this.completed = completed;
-        this.description = description;
+        this.parentName = parentName;
         this.user = username;
-        this.subtargets = subtargets;
+        this.description = description;
+        this.completed = completed;
     }
 
-    completeUncompleteTarget(changeTo){
+    addDBSubtarget(){
+        console.log(this);
+        const body = JSON.stringify(this);
+        
+        var config = {
+          headers: {'Content-Type': 'application/json'}
+        };
+        axios.post('/subtarget?username=' + this.user, body, config)
+            .then(function(response){
+                console.log(response);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+    }
+
+    completeUncompleteSubtarget(changeTo){
         this.completed = changeTo;
         const body = JSON.stringify({ completed: changeTo });
         var config = {
             headers: {'Content-Type': 'application/json'}
         };
-        axios.patch('/target/complete/' + this.name + '?username=' + this.user, body, config)
+        axios.patch('/subtarget/complete/' + this.name + '?username=' + this.user, body, config)
             .then(function(response){                
             })
             .catch(function(error){
@@ -41,7 +57,7 @@ export default class Target {
         var config = {
             headers: {'Content-Type': 'application/json'}
         };
-        axios.patch('/target/edit/' + oldname + '?username=' + this.user, body, config)
+        axios.patch('/subtarget/edit/' + oldname + '?username=' + this.user, body, config)
             .then(function(response){
             })
             .catch(function(error){
@@ -49,26 +65,12 @@ export default class Target {
             });
     }
 
-    createDBTarget(){
-        const body = JSON.stringify(this);
-        var config = {
-          headers: {'Content-Type': 'application/json'}
-        };
-        axios.post('/target?username=' + this.user, body, config)
-            .then(function(response){
-                console.log(response);
-            })
-            .catch(function(error){
-                console.log(error);
-            });
-    }
-
-    deleteTarget(){
+    deleteSubtarget(){
         //delete from database
         var config = {
             headers: {'Content-Type': 'application/json'}
           };
-        axios.delete('/target/' + this.name + '?username=' + localStorage.getItem('username'), config)
+        axios.delete('/subtarget/' + this.name + '?username=' + localStorage.getItem('username'), config)
             .then(function(response){
                 console.log(response);
             })
