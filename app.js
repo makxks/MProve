@@ -4,10 +4,16 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var appRoutes = require('./routes/app');
+var userRoutes = require('./routes/user');
+var targetRoutes = require('./routes/target');
+var subtargetRoutes = require('./routes/subtarget');
+var rewardRoutes = require('./routes/reward');
 
 var app = express();
-//mongoose.connect('localhost:27017/mprove');
-//mongoose.connect('makks:M0nument@ds159591.mlab.com:59591/class-tracker');
+var prodDB = 'makks:M0nument@ds123556.mlab.com:23556/mprove';
+var localDB = 'localhost:27017/mprove';
+
+mongoose.connect(prodDB);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -25,6 +31,10 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/user', userRoutes);
+app.use('/target', targetRoutes);
+app.use('/subtarget', subtargetRoutes);
+app.use('/reward', rewardRoutes);
 app.use('/', appRoutes);
 
 app.use(function (req, res, next) {

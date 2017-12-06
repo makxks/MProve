@@ -1,14 +1,62 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import Auth from '../auth/auth';
+import axios from 'axios';
 
 class Profile extends Component {
+    auth = new Auth();
 
     static contextTypes = {
         router: PropTypes.object
     };
 
     goHome() {
-        this.context.router.push(/*  /user +   */ '/max/home');
+        this.context.router.push('/');
+    }
+
+    getUserName() {
+        return localStorage.getItem('username');
+    }
+
+    getEmail() {
+        return localStorage.getItem('email');
+    }
+
+    getPoints() {
+        return localStorage.getItem('points');
+    }
+
+    getTotalPoints() {
+        return localStorage.getItem('totalPoints');
+    }
+
+    getRewardsClaimed() {
+        return localStorage.getItem('rewardsClaimed');
+    }
+
+    getTargetsReached() {
+        return localStorage.getItem('targetsReached');
+    }
+
+    resetPassword() {
+        this.auth.changePassword(localStorage.getItem('email'));
+    }
+
+    goToTargets(){
+        this.context.router.push('/' + localStorage.getItem('username') + '/targets');
+    }
+
+    goToRewards(){
+        this.context.router.push('/' + localStorage.getItem('username') + '/rewards');
+    }
+
+    renderLinks() {
+        return (
+            <div className="linkContainer">
+                <button className="linkButton" onClick={this.goToTargets.bind(this)}>Targets</button>
+                <button className="linkButton" onClick={this.goToRewards.bind(this)}>Rewards</button>
+            </div>
+        )
     }
 
     render() {
@@ -17,13 +65,26 @@ class Profile extends Component {
                 <h1>Profile</h1>
                 <hr />
                 <div className="profile">
-                    <h3>Username</h3>
-                    <h3>Email</h3>
-                    <h3>Current Points</h3>
-                    <h3>Total Points Earned</h3>
-                    <h3>Targets Achieved</h3>
-                    <h3>Rewards Claimed</h3>
+                    <h4>Username</h4>
+                    <hr/>
+                    <h4 className="answer">{this.getUserName()}</h4>
+                    <h4>Email</h4>
+                    <hr/>
+                    <h4 className="answer">{this.getEmail()} <button className="answerButton" onClick={() => this.resetPassword.bind(this)}>Change Password</button></h4>
+                    <h4>Current Points</h4>
+                    <hr/>
+                    <h4 className="answer">{this.getPoints()}</h4>
+                    <h4>Total Points Earned</h4>
+                    <hr/>
+                    <h4 className="answer">{this.getTotalPoints()}</h4>
+                    <h4>Rewards Claimed</h4>
+                    <hr/>
+                    <h4 className="answer">{this.getRewardsClaimed()}</h4>
+                    <h4>Targets Reached</h4>
+                    <hr/>
+                    <h4 className="answer">{this.getTargetsReached()}</h4>
                 </div>
+                {this.renderLinks()}
             </div>
         )
     };

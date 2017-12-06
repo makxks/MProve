@@ -53,7 +53,7 @@ class RewardAddReward extends Component{
         const { fields: { title, points, description }, handleSubmit } = this.props;
 
         return(
-            <div>
+            <div className="editPanelForm">
                 <span className="glyphicon glyphicon-remove closeButton" onClick={() => this.closePanel()}></span>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <h3>{this.state.addOrEdit} Reward</h3>
@@ -62,7 +62,7 @@ class RewardAddReward extends Component{
                     <h4>Reward points</h4>
                     <input type="text" {...points} required value={this.state.points} onChange={event => this.onPointsChange(event.target.value)} />
                     <h4>Reward description</h4>
-                    <input type="text" {...description} required value={this.state.description} onChange={event => this.onDescriptionChange(event.target.value)} />
+                    <textarea className="formTA" {...description} required value={this.state.description} onChange={event => this.onDescriptionChange(event.target.value)} />
                     <button type="submit" className="buttonForm">{this.state.addOrEdit}</button> 
                 </form>
             </div>      
@@ -82,15 +82,15 @@ function validate(values) {
     const errors = {};
     
         if (!values.title) {
-            errors.title = 'Enter a title';
+            errors.title = 'Enter a title for this reward';
         }
     
         if (!values.points) {
-            errors.points = 'Enter some points';
+            errors.points = 'Enter the points value of this reward';
         }
 
         if (!values.description) {
-            errors.description = 'Enter a description';
+            errors.description = 'Enter a description for this reward';
         }
     
         return errors;

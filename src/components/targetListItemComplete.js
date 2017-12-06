@@ -58,7 +58,12 @@ class TargetListItemComplete extends Component {
     renderSubTargets(){
         var rows = [];
         for(var i=0; i<this.state.targetItem.subtargets.length; i++){
-            rows.push(<TargetListSubItemComplete subTarget={this.state.targetItem.subtargets[i]} removeTarget={this.removeSubTarget} key={i} />);
+            rows.push(<TargetListSubItemComplete 
+                subTarget={this.state.targetItem.subtargets[i]} 
+                removeTarget={this.removeSubTarget}
+                completeSubTarget={this.props.completeTarget}
+                uncompleteSubTarget={this.props.uncompleteTarget}
+                key={i} />);
         }
         var cssClass = "";
         if(this.state.showingSubtasks){
@@ -75,15 +80,14 @@ class TargetListItemComplete extends Component {
     }
 
     removeSubTarget(subtarget){
-        var targets = this.state.targetItem.subtargets;
-        for(var i=0; i<targets.length; i++){
-            if(targets[i] == subtarget){
-                targets.splice(i,1);
+        var tempTargetItem = this.state.targetItem;
+        for(var i=0; i<tempTargetItem.subtargets.length; i++){
+            if(tempTargetItem.subtargets[i] == subtarget){
+                tempTargetItem.subtargets.splice(i,1);
                 break;
             }
         }
-        var tempTargetItem = this.state.targetItem;
-        tempTargetItem.subtargets = targets;
+        subtarget.deleteSubtarget();
         this.setState({ targetItem: tempTargetItem });
     }
 

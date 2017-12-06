@@ -17,6 +17,10 @@ class RewardListItem extends Component{
         this.setState({ rewardItem: props.rewardItem });
     }
 
+    componentDidMount(){
+        this.setState({ rewardItem: this.props.rewardItem });
+    }
+
     showDescription(){
         this.setState({ showingDescription:true });
     }
