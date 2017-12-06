@@ -13,7 +13,7 @@ var app = express();
 var prodDB = 'makks:M0nument@ds123556.mlab.com:23556/mprove';
 var localDB = 'localhost:27017/mprove';
 
-mongoose.connect(prodDB);
+mongoose.connect(prodDB, { useMongoClient: true });
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
