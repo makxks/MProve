@@ -10,7 +10,7 @@ var subtargetRoutes = require('./routes/subtarget');
 var rewardRoutes = require('./routes/reward');
 
 var app = express();
-var prodDB = 'makks:M0nument@ds123556.mlab.com:23556/mprove';
+var prodDB = 'mongodb://makks:M0nument@ds123556.mlab.com:23556/mprove';
 var localDB = 'localhost:27017/mprove';
 
 mongoose.connect(prodDB, { useMongoClient: true });
