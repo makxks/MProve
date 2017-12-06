@@ -8,6 +8,7 @@
     "start": "node ./bin/www",
     "start2": "node app.js",
     "build": "babel public && webpack --config webpack.config.js --progress --profile --watch",
+    "postinstall": "babel public && webpack --config webpack.config.js --progress --profile --watch",
     "start1": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
