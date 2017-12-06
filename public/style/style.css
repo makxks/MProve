@@ -9,7 +9,7 @@ form {
 }
 
 .rewardTargetContainer {
-    height: 100%;
+    height: 90%;
     width: 100%;
 }
 
@@ -82,6 +82,11 @@ h1 {
     margin-bottom: 1px;
 }
 
+.section {
+    height: 100%;
+    width: 100%;
+}
+
 .section hr {
     margin: 5px 0;
 }
@@ -113,9 +118,8 @@ h1 {
     color: white;
 }
 
-.aboutButton {
+.aboutButton, .linkButton {
     margin-top: 3%;
-    margin-left: 20%;
     height: 35px;
     width: 60%;
     border: #A97023 2px solid;
@@ -125,23 +129,39 @@ h1 {
     color: white;
 }
 
-.mainButton:hover, .aboutButton:hover {
+.linkButton {
+    width: 40%;
+}
+
+.aboutButton {
+    margin-left:20%;
+}
+
+.linkContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.mainButton:hover, .aboutButton:hover, .linkButton:hover {
     border: #C98529 4px solid;
     background-color: #EEEEEE;
     color: #C98529;
 }
 
-.mainButton:active, .aboutButton:active {
+.mainButton:active, .aboutButton:active, .linkButton:active {
     border: #805419 4px solid;
     background-color: white;
     color: #1F1F1F;
 }
 
-.aboutButton:hover {
+.aboutButton:hover, .linkButton:hover {
     border: #C98529 2px solid;
 }
 
-.aboutButton:active {
+.aboutButton:active, .linkButton:active {
     border: #805419 2px solid;
 }
 
@@ -279,8 +299,8 @@ h1 {
 }
 
 .profile {
-    min-height: 90%;
-    max-height: 100%;
+    min-height: 80%;
+    max-height: 80%;
     width: 100%;
     display: flex;
     flex-direction: column;

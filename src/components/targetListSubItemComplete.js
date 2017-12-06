@@ -76,7 +76,7 @@ class TargetListSubItemComplete extends Component {
     render(){
         var cssClass = "";
         if(this.state.completed){
-            cssClass = "fade";
+            cssClass = "fade ";
         }
         else if(!this.state.completed){
             cssClass = "";

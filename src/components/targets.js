@@ -11,13 +11,33 @@ class Targets extends Component {
         this.context.router.push('/');
     }
 
+    goToProfile(){
+        this.context.router.push('/' + localStorage.getItem('username') + '/profile');
+    }
+
+    goToRewards(){
+        this.context.router.push('/' + localStorage.getItem('username') + '/rewards');
+    }
+
+    renderLinks() {
+        return (
+            <div className="linkContainer">
+                <button className="linkButton" onClick={this.goToRewards.bind(this)}>Rewards</button>
+                <button className="linkButton" onClick={this.goToProfile.bind(this)}>Profile</button>
+            </div>
+        )
+    }
+
     conditionalRender(){
         if(localStorage.getItem('email')){
-            return ( 
-                <div className="rewardTargetContainer">
-                    <h1>Targets</h1>
-                    <hr />                
-                    <TargetList />
+            return (
+                <div className="section">
+                    <div className="rewardTargetContainer">
+                        <h1>Targets</h1>
+                        <hr />                
+                        <TargetList />
+                    </div>
+                    {this.renderLinks()}
                 </div>
             )
         }

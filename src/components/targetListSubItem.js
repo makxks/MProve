@@ -27,7 +27,7 @@ class TargetListSubItem extends Component {
         else{
             this.setState({ overdue: false });
         }
-        if(this.state.overdue){
+        if(props.subTarget.length < time && !props.subTarget.completed){
             this.overduePanelStyle = "overduePanelSub";
         }
         else{
@@ -38,9 +38,16 @@ class TargetListSubItem extends Component {
     componentWillMount(){
         var time = new Date();
         if(this.props.subTarget.length < time){
-            this.overduePanelStyle = "overduePanelSub";
+            this.setState({ overdue: true });
+            if(!this.state.completed){
+                this.overduePanelStyle = "overduePanelSub";
+            }
+            else {
+                this.overduePanelStyle = "";
+            }
         }
         else{
+            this.setState({ overdue: false });
             this.overduePanelStyle = "";
         }
     }
@@ -56,7 +63,8 @@ class TargetListSubItem extends Component {
 
         var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
         user.addPoints(parseInt(this.props.subTarget.points));
-        this.setState({ completed: true });
+        this.setState({ completed: true, overdue: false });
+        this.overduePanelStyle = "";
     }
 
     unCompleteSubtask(){
@@ -70,6 +78,15 @@ class TargetListSubItem extends Component {
 
         var user = new User(localStorage.getItem('email'), localStorage.getItem('username'), localStorage.getItem('points'));
         user.usePoints(parseInt(this.props.subTarget.points));
+        var time = new Date();
+        if(this.props.subTarget.length < time){
+            this.setState({ overdue: true });
+            this.overduePanelStyle = "overduePanelSub";
+        }
+        else{
+            this.setState({ overdue: false });
+            this.overduePanelStyle = "";
+        }
         this.setState({ completed: false });
     }
 
@@ -116,7 +133,7 @@ class TargetListSubItem extends Component {
         var time = new Date();
         var due = new Date(this.props.subTarget.length);
         var dateMessage = due.toLocaleDateString() + " " + this.pad(due.getHours(),2) + ":" + this.pad(due.getMinutes(),2);
-        if(this.props.subTarget.length < time){
+        if(this.props.subTarget.length < time && !this.state.completed){
             return(
                 <p className={this.overdueStyle}><b>!! {dateMessage} !!</b></p>
             )
@@ -139,12 +156,13 @@ class TargetListSubItem extends Component {
         var cssClass = "";
         if(this.state.completed){
             cssClass = "fade";
+
         }
         else if(!this.state.completed){
             cssClass = "";
         }
         return(
-            <li className={cssClass + this.overduePanelStyle +  " listItem subListItem"}>
+            <li className={cssClass + " " + this.overduePanelStyle +  " listItem subListItem"}>
                 {this.renderItemName()}
                 {this.renderItemLength()}
                 {this.renderItemPoints()}

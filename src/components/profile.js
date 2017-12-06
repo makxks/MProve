@@ -42,6 +42,23 @@ class Profile extends Component {
         this.auth.changePassword(localStorage.getItem('email'));
     }
 
+    goToTargets(){
+        this.context.router.push('/' + localStorage.getItem('username') + '/targets');
+    }
+
+    goToRewards(){
+        this.context.router.push('/' + localStorage.getItem('username') + '/rewards');
+    }
+
+    renderLinks() {
+        return (
+            <div className="linkContainer">
+                <button className="linkButton" onClick={this.goToTargets.bind(this)}>Targets</button>
+                <button className="linkButton" onClick={this.goToRewards.bind(this)}>Rewards</button>
+            </div>
+        )
+    }
+
     render() {
         return ( 
             <div className="section">
@@ -67,6 +84,7 @@ class Profile extends Component {
                     <hr/>
                     <h4 className="answer">{this.getTargetsReached()}</h4>
                 </div>
+                {this.renderLinks()}
             </div>
         )
     };

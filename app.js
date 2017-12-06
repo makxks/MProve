@@ -10,8 +10,10 @@ var subtargetRoutes = require('./routes/subtarget');
 var rewardRoutes = require('./routes/reward');
 
 var app = express();
-mongoose.connect('localhost:27017/mprove');
-//mongoose.connect('makks:M0nument@ds159591.mlab.com:59591/class-tracker');
+var prodDB = 'makks:M0nument@ds123556.mlab.com:23556/mprove';
+var localDB = 'localhost:27017/mprove';
+
+mongoose.connect(prodDB);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
