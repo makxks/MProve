@@ -9,6 +9,7 @@ import TargetRemoveTarget from './targetRemoveTarget';
 import { connect } from 'react-redux';
 import { fetchTargets } from '../actions/index';
 import { fetchSubtargets } from '../actions/index';
+import { fetchRewards } from '../actions/index';
 import Auth from '../auth/auth';
 
 class TargetList extends Component {
@@ -17,7 +18,7 @@ class TargetList extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { unCompletedTargets: [], completedTargets: [], panelTarget: null, panelFunction: "Add", panelTargetIsSub: false };
+        this.state = { unCompletedTargets: [], completedTargets: [], panelTarget: null, panelFunction: "Add", panelTargetIsSub: false, cheapestReward: 0 };
 
         this.renderListHeadings = this.renderListHeadings.bind(this);
         this.renderListItems = this.renderListItems.bind(this);
@@ -41,6 +42,19 @@ class TargetList extends Component {
     componentWillMount() {
         var tempCompleted = [];
         var tempUncompleted = [];
+        var tempCheapestReward = 0;
+
+        this.props.fetchRewards(localStorage.getItem('email'))
+            .then((response) => {
+                if(response.payload){
+                    for(var i=0; i<response.payload.length; i++){
+                        if(i=0 || response.payload[i].points<tempCheapestReward){
+                            tempCheapestReward = response.payload[i].points;
+                        }
+                    }
+                    this.setState({ cheapestReward: tempCheapestReward });
+                }
+            })
 
         this.props.fetchTargets(localStorage.getItem('email'))
             .then((response) => {
@@ -327,14 +341,23 @@ class TargetList extends Component {
 
     renderUserAndPoints(){
         if(localStorage.getItem('email')){
-          return (
-            <div className="user">
-              <h4 className="username">Hi {localStorage.getItem('username')}</h4><h4 className="userPoints">You have {localStorage.getItem('points')} points</h4>
-            </div>
-          )
+            if(this.state.cheapestReward == 0 || localStorage.getItem('points') < this.state.cheapestReward){
+                return (
+                    <div className="user">
+                        <h4 className="username">Hi {localStorage.getItem('username')}</h4><h4 className="userPoints">You have {localStorage.getItem('points')} points</h4>
+                    </div>
+                )
+            }
+            else if(localStorage.getItem('points') > this.state.cheapestReward){
+                return (
+                    <div className="user">
+                        <h4 className="username">Hi {localStorage.getItem('username')}</h4><h4 className="userPoints">You have {localStorage.getItem('points')} points, you can claim a reward!</h4>
+                    </div>
+                )
+            }
         }
         else{
-          return;
+            return;
         }
     }
 
@@ -358,4 +381,4 @@ function mapStateToProps(state) {
     return { targets: state.targets.all, subtargets: state.subtargets.all };
 };
 
-export default connect(mapStateToProps, { fetchTargets, fetchSubtargets })(TargetList);
+export default connect(mapStateToProps, { fetchTargets, fetchSubtargets, fetchRewards })(TargetList);
