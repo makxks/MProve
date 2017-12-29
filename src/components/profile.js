@@ -10,6 +10,10 @@ class Profile extends Component {
         router: PropTypes.object
     };
 
+    getSignedIn() {
+        return this.auth.isAuthenticated();
+    }
+
     goHome() {
         this.context.router.push('/');
     }
@@ -59,6 +63,14 @@ class Profile extends Component {
         )
     }
 
+    renderSignOutButton() {
+        if(this.getSignedIn()){
+            return (
+                <li><Link className="button authButtons" to={"/auth/logout"}>Logout</Link></li>
+            )
+        }
+    }
+
     render() {
         return ( 
             <div className="section">
@@ -85,6 +97,7 @@ class Profile extends Component {
                     <h4 className="answer">{this.getTargetsReached()}</h4>
                 </div>
                 {this.renderLinks()}
+                {this.renderSignOutButton()}
             </div>
         )
     };
