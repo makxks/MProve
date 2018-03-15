@@ -52,21 +52,19 @@ export default class Auth {
         window.location.hash = '';
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
+        this.auth0.client.userInfo(authResult.accessToken, (err, user) => {
+          this.loggedInUser = user.email;
+          this.emailVerified = user.email_verified;
+          axios.get('/user?email=' + user.email)
+            .then(function(response){
+              localStorage.setItem('username', response.data.username);
+            });
+          localStorage.setItem('email', user.email);
+          let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+          localStorage.setItem('expires_at', expiresAt);
+        });
       }
     });
-    if(localStorage.getItem('access_token')){
-      this.auth0.client.userInfo(localStorage.getItem('access_token'), (err, user) => {
-        this.loggedInUser = user.email;
-        this.emailVerified = user.email_verified;
-        axios.get('/user?email=' + user.email)
-          .then(function(response){
-            localStorage.setItem('username', response.data.username);
-          });
-        localStorage.setItem('email', user.email);
-        let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-        localStorage.setItem('expires_at', expiresAt);
-      });
-    }
   }
 
   login(email, password) {
