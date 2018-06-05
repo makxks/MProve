@@ -66,7 +66,9 @@ class Profile extends Component {
     renderSignOutButton() {
         if(this.getSignedIn()){
             return (
-                <li><Link className="button authButtons" to={"/auth/logout"}>Logout</Link></li>
+                <div className="linkContainer">
+                    <Link className="linkButton" to={"/auth/logout"}>Logout</Link>
+                </div>
             )
         }
     }
