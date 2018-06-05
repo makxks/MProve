@@ -10,11 +10,16 @@ class LoginForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { panelCssClass: "hidden" };
+        this.state = { panelCssClass: "hidden", error: null };
     }
 
     onSubmit(props) {
-        this.auth.login(props.email, props.password);
+        try {
+            this.auth.login(props.email, props.password);
+        }
+        catch(error) {
+            this.setState({ error });
+        }
     }
 
     showResetPanel(){
@@ -33,6 +38,20 @@ class LoginForm extends Component {
                 />
             </div>
         )
+    }
+
+    renderErrorPanel(){
+        if(this.state.error){
+            return (
+                <div className={"editPanel"}>
+                    <div className="errorPanel">
+                        <h2>An error occurred or your login credentials are incorrect</h2>
+                        <hr />
+                        <h4>Please refresh the app and try again</h4>
+                    </div>
+                </div>
+            )
+        }
     }
 
     loginForm(){
@@ -70,6 +89,7 @@ class LoginForm extends Component {
             <div className="commentInput">
                 {this.loginForm()}
                 {this.renderPasswordResetForm()}
+                {this.renderErrorPanel()}
             </div>
         );
     }
