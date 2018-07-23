@@ -11,7 +11,7 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'makks.eu.auth0.com',
     clientID: 'HKr7PTMYONRlzbHZEN3DQ7O3nVjPqedX',
-    redirectUri: 'http://localhost:8080/home',
+    redirectUri: 'https://mprove.herokuapp.com/home',
     responseType: 'token id_token'
   });
 
@@ -32,6 +32,8 @@ export default class Auth {
           this.loggedInUser = "";
           var errorCode = err.code;
           var errorMessage = err.message;
+          //Observable error here
+          //Listen in auth component
         }
         if(user){
           this.loggedInUser = user.email;
@@ -47,6 +49,8 @@ export default class Auth {
       if(err) {
         var errorCode = err.code;
         var errorMessage = err.message;
+        //Observable error here
+          //Listen in auth component
       }
       if(authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
@@ -78,6 +82,8 @@ export default class Auth {
         var errorCode = err.code;
         var errorMessage = err.message;
         console.log(errorMessage);
+        //Observable error here
+          //Listen in auth component
         return;
       }
       localStorage.setItem('access_token', authResult.accessToken);
@@ -118,6 +124,8 @@ export default class Auth {
       if (err) {
         var errorCode = err.code;
         var errorMessage = err.description;
+        //Observable error here
+          //Listen in auth component
         return;
       };
       this.addUser(user);
@@ -154,6 +162,8 @@ export default class Auth {
     }, function (err, resp) {
       if(err){
         console.log(err.message);
+        //Observable error here
+          //Listen in auth component
         return;
       }else{
         console.log(resp);

@@ -45,12 +45,12 @@ class About extends Component {
                             </p>
                         </div>
                         <div>
-                            <img src={'/images/targets..png'} width="549px" height="262px"></img>
+                            <img className={'targetImage'} src={'/images/targets..png'} width="549px" height="262px"></img>
                         </div>
                     </div>
                     <div className="aboutSection">
                         <div>
-                            <img src={'/images/rewards..png'} width="525px" height="225px"></img>
+                            <img className={'rewardImage'} src={'/images/rewards..png'} width="525px" height="225px"></img>
                         </div>
                         <div>
                             <p>You can also add some rewards if you want to. Again these should be things you want, not things you need. Once you have earned enough points you can

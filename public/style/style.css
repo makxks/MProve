@@ -120,7 +120,7 @@ h1 {
 }
 
 .aboutButton, .linkButton {
-    margin-top: 1%;
+    margin-top: 3%;
     height: 35px;
     width: 60%;
     border: #A97023 2px solid;
@@ -873,6 +873,16 @@ select {
 
 .authAll {
     padding-top: 5%;
+}
+
+.targetImage {
+    width: 549px; 
+    height: 262px;
+}
+
+.rewardImage {
+    width: 525px; 
+    height: 225px;
 }
 
 /* Let's get this party started */
