@@ -11,6 +11,12 @@ class AuthComponent extends Component {
         router: PropTypes.object
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = { hasError: false };
+    }
+
     getWindowValue() {
         var url = window.location.pathname.split("/");
         var method = url[2];
@@ -85,7 +91,7 @@ class AuthComponent extends Component {
     }
 
     renderError(){
-        if(this.hasError) {
+        if(this.state.hasError) {
             return(
                 <div className="editPanel">
                     <div className="errorPanel">

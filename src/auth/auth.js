@@ -49,6 +49,10 @@ export default class Auth {
         }
       });
     }
+
+    this.errorOccurred.on('error', () => {
+      AuthComponent.setState({ hasError: true });
+    })
   }
 
   handleAuthentication() {
