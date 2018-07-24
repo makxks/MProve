@@ -14,7 +14,7 @@ class AuthComponent extends Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false, errorMessage: '', errorCode: '' };
-        auth.errorOccurred
+        this.auth.errorOccurred
             .subscribe(
                 (error) => {
                     this.setState({
