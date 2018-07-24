@@ -7,8 +7,9 @@ class Error extends Component {
         return(
             <div className="editPanel">
                 <div className="errorPanel">
-                    <h3>An unexpected error occurred</h3>
+                    <h2>An unexpected error occurred</h2>
                     <hr />
+                    <h3>Your login details may be incorrect</h3>
                     <h3>Please refresh the application and try again</h3>
                 </div>
             </div>
