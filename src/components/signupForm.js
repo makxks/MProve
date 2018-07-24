@@ -11,9 +11,19 @@ class SignupForm extends Component {
         router: PropTypes.object
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = { error: null };
+    }
+
     onSubmit(props) {
         var user = new User(props.email, props.username);
-        this.auth.signup(props.email, props.password, user);
+        this.auth.signup(props.email, props.password, user, (err) => {
+            if (err){
+                this.setState({ error: err });
+            }
+        });
         this.context.router.push('/'); 
     }
 
