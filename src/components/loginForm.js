@@ -10,7 +10,7 @@ class LoginForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { panelCssClass: "hidden", error: null };
+        this.state = { panelCssClass: "hidden", error: null, tryingLogin: false };
     }
 
     onSubmit(props) {
