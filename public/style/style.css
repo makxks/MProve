@@ -877,13 +877,13 @@ select {
 }
 
 .targetImage {
-    width: 384px; 
-    height: 183px;
+    width: 549px; 
+    height: auto;
 }
 
 .rewardImage {
-    width: 366px; 
-    height: 158px;
+    width: 525px; 
+    height: auto;
 }
 
 /* Let's get this party started */
