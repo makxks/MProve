@@ -14,7 +14,24 @@ class AuthComponent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { hasError: false };
+        this.state = { hasError: false, code: '', message: '' };
+    }
+
+    error(error){
+        this.setState({ hasError: true });
+        if(error.message){
+            this.setState({ message: error.message});
+        }
+        else
+        {
+            this.setState({ message: 'Please refresh the app and try again'});
+        }
+        if(error.code){
+            this.setState({ code: error.code });
+        }
+        else{
+            this.setState({ code: 'An unexpected error occurred' });
+        }
     }
 
     getWindowValue() {
@@ -95,10 +112,9 @@ class AuthComponent extends Component {
             return(
                 <div className="editPanel">
                     <div className="errorPanel">
-                        <h2>{ this.state.errorCode }</h2>
+                        <h2>{ this.state.code }</h2>
                         <hr />
-                        <h4>{ this.state.errorMessage }</h4>
-                        <h4>Please refresh the app and try again</h4>
+                        <h4>{ this.state.message }</h4>
                     </div>
                 </div>
             )

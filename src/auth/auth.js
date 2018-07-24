@@ -50,8 +50,8 @@ export default class Auth {
       });
     }
 
-    this.errorOccurred.on('error', () => {
-      AuthComponent.setState({ hasError: true });
+    this.errorOccurred.on('error', (error) => {
+      AuthComponent.error(error)
     })
   }
 
