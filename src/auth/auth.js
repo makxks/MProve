@@ -20,7 +20,7 @@ export default class Auth {
   errorOccurred = new EventEmitter();
 
   error(error) {
-    this.errorOccurred.emit('error', error)
+    this.errorOccurred.emit('error', error);
   }
 
   goHome(username) {
@@ -49,8 +49,6 @@ export default class Auth {
         }
       });
     }
-
-    
   }
 
   handleAuthentication() {
