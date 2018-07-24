@@ -10,11 +10,6 @@ Tasks and rewards can be added with names, descriptions, points values, and dead
 
 ---
 
-Needed - 
-Error handling improvements - Add events to the authentication process to display any errors that occur to the user. Check and improve task/reward submission errors.
-
----
-
 Build locally -
 npm run build
 
