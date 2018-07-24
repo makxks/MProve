@@ -9,7 +9,7 @@ const history = createHistory({
   forceRefresh: true
 });
 
-export default class Auth extends EventEmitter {
+export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'makks.eu.auth0.com',
     clientID: 'HKr7PTMYONRlzbHZEN3DQ7O3nVjPqedX',
