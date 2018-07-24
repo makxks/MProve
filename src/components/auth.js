@@ -64,7 +64,7 @@ class AuthComponent extends Component {
     }
 
     signOut() {
-        auth.logout();
+        this.auth.logout();
         this.context.router.push('/');
     }
 

@@ -17,7 +17,7 @@ export default class Auth {
   });
 
   error(error) {
-    AuthComponent.setState({
+    this.AuthComponent.setState({
       hasError: true,
       errorCode: error.code,
       errorMessage: error.message
