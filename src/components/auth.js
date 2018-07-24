@@ -11,21 +11,6 @@ class AuthComponent extends Component {
         router: PropTypes.object
     };
 
-    constructor(props) {
-        super(props);
-        this.state = { hasError: false, errorMessage: '', errorCode: '' };
-        this.auth.errorOccurred
-            .subscribe(
-                (error) => {
-                    this.setState({
-                        hasError: true,
-                        errorMessage: error.message,
-                        errorCode: error.code
-                    })
-                }
-        )
-    }
-
     getWindowValue() {
         var url = window.location.pathname.split("/");
         var method = url[2];
