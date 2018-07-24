@@ -15,7 +15,11 @@ class LoginForm extends Component {
 
     onSubmit(props) {
         try {
-            this.auth.login(props.email, props.password);
+            this.auth.login(props.email, props.password, (err) => {
+                if(err){
+                    this.setState({ error });
+                }
+            });
         }
         catch(error) {
             this.setState({ error });

@@ -89,7 +89,7 @@ export default class Auth {
         var errorMessage = err.message;
         console.log(errorMessage);
         this.error(err).bind(this);
-        return;
+        return err;
       }
       localStorage.setItem('access_token', authResult.accessToken);
       localStorage.setItem('id_token', authResult.idToken);
