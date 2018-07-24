@@ -92,7 +92,9 @@ class LoginForm extends Component {
         }
         else{
             return (
-                <h4>Logging in</h4>
+                <div className="authForm">
+                    <h4>Logging in....</h4>
+                </div>
             )
         }
         

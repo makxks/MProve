@@ -35,42 +35,51 @@ class SignupForm extends Component {
     signupForm(){
         const { fields: { email, username, password, passwordConfirm }, handleSubmit } = this.props;
    
-        return (
-        <div className="authForm">
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="commentInput">
-                <h3>Signup</h3>
-                <div className={`form-group formInput ${email.touched && email.invalid ? 'has-danger' : ''}`}>
-                    <input type="email" className="form-control commentInput" {...email} />
-                    <label>Your email</label>
-                    <div className="text-help">
-                        {email.touched ? email.error : ''}
+        if(!this.state.tryingSignup){
+            return (
+            <div className="authForm">
+                <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="commentInput">
+                    <h3>Signup</h3>
+                    <div className={`form-group formInput ${email.touched && email.invalid ? 'has-danger' : ''}`}>
+                        <input type="email" className="form-control commentInput" {...email} />
+                        <label>Your email</label>
+                        <div className="text-help">
+                            {email.touched ? email.error : ''}
+                        </div>
                     </div>
-                </div>
-                <div className={`form-group formInput ${username.touched && username.invalid ? 'has-danger' : ''}`}>
-                    <input type="text" className="form-control commentInput username" {...username} />
-                    <label>Choose a username</label>
-                    <div className="text-help">
-                        {username.touched ? username.error : ''}
+                    <div className={`form-group formInput ${username.touched && username.invalid ? 'has-danger' : ''}`}>
+                        <input type="text" className="form-control commentInput username" {...username} />
+                        <label>Choose a username</label>
+                        <div className="text-help">
+                            {username.touched ? username.error : ''}
+                        </div>
                     </div>
-                </div>
-                <div className={`form-group formInput ${password.touched && password.invalid ? 'has-danger' : ''}`}>
-                    <input type="password" className="form-control commentInput" {...password} />
-                    <label>Enter a new password</label>
-                    <div className="text-help">
-                        {password.touched ? password.error : ''}
+                    <div className={`form-group formInput ${password.touched && password.invalid ? 'has-danger' : ''}`}>
+                        <input type="password" className="form-control commentInput" {...password} />
+                        <label>Enter a new password</label>
+                        <div className="text-help">
+                            {password.touched ? password.error : ''}
+                        </div>
                     </div>
-                </div>
-                <div className={`form-group formInput ${passwordConfirm.touched && passwordConfirm.invalid ? 'has-danger' : ''}`}>
-                    <input type="password" className="form-control commentInput" {...passwordConfirm} />
-                    <label>Reenter your password</label>
-                    <div className="text-help">
-                        {passwordConfirm.touched ? passwordConfirm.error : ''}
+                    <div className={`form-group formInput ${passwordConfirm.touched && passwordConfirm.invalid ? 'has-danger' : ''}`}>
+                        <input type="password" className="form-control commentInput" {...passwordConfirm} />
+                        <label>Reenter your password</label>
+                        <div className="text-help">
+                            {passwordConfirm.touched ? passwordConfirm.error : ''}
+                        </div>
                     </div>
+                    <button type="submit" className="primaryButton">Submit</button>
+                </form>
+            </div>
+            );
+        }
+        else{
+            return (
+                <div className="authForm">
+                    <h4>Logging in....</h4>
                 </div>
-                <button type="submit" className="primaryButton">Submit</button>
-            </form>
-        </div>
-        );
+            );
+        }
         
     }
 
