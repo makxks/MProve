@@ -76,7 +76,7 @@ class SignupForm extends Component {
         else{
             return (
                 <div className="authForm">
-                    <h4>Logging in....</h4>
+                    <h4>Signing up....</h4>
                 </div>
             );
         }
