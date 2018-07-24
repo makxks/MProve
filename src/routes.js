@@ -9,6 +9,7 @@ import Profile from './components/profile';
 import Targets from './components/targets';
 import Rewards from './components/rewards';
 import About from './components/about';
+import Error from './components/error';
 
 export default (
 <Route path="/" component={App}>
@@ -19,5 +20,6 @@ export default (
     <Route path="/:username/targets" component={Targets} />
     <Route path="/:username/rewards" component={Rewards} />
     <Route path="/about" component={About} />
+    <Route path="/error/:code/:message" component={Error} />
 </Route>
 );

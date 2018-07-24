@@ -49,6 +49,10 @@ export default class Auth {
         }
       });
     }
+
+    this.errorOccurred.on('error', (error) => {
+      history.push('/' + error.code + '/' + error.message);
+    });
   }
 
   handleAuthentication() {
