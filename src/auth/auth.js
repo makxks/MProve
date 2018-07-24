@@ -40,7 +40,7 @@ export default class Auth {
           this.loggedInUser = "";
           var errorCode = err.code;
           var errorMessage = err.message;
-          this.error(err).bind(this);
+          this.error(err);
         }
         if(user){
           this.loggedInUser = user.email;
@@ -51,7 +51,7 @@ export default class Auth {
     }
 
     this.errorOccurred.on('error', (error) => {
-      history.push('/' + error.code + '/' + error.message);
+      history.push('/error/' + error.code + '/' + error.message);
     });
   }
 
