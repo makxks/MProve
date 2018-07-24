@@ -50,9 +50,7 @@ export default class Auth {
       });
     }
 
-    this.errorOccurred.on('error', (error) => {
-      AuthComponent.error(error)
-    })
+    
   }
 
   handleAuthentication() {

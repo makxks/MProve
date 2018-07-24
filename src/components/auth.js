@@ -15,6 +15,10 @@ class AuthComponent extends Component {
         super(props);
 
         this.state = { hasError: false, code: '', message: '' };
+
+        auth.errorOccurred.on('error', (error) => {
+            error(error);
+        })
     }
 
     error(error){
