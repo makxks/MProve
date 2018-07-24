@@ -5,10 +5,12 @@ class Error extends Component {
     
     render() {
         return(
-            <div className="authForm">
-                <h4>An unexpected error occurred</h4>
-                <hr />
-                <h4>Please refresh the application and try again</h4>
+            <div className="editPanel">
+                <div className="errorPanel">
+                    <h3>An unexpected error occurred</h3>
+                    <hr />
+                    <h3>Please refresh the application and try again</h3>
+                </div>
             </div>
         )
     };
