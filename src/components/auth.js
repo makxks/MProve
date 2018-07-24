@@ -11,6 +11,11 @@ class AuthComponent extends Component {
         router: PropTypes.object
     };
 
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false, errorMessage: '', errorCode: '' };
+    }
+
     getWindowValue() {
         var url = window.location.pathname.split("/");
         var method = url[2];
@@ -81,6 +86,24 @@ class AuthComponent extends Component {
                     <button onClick={this.signOut()} className="btn btn-danger">Logout</button>
                 </div>
             )
+        }
+    }
+
+    renderError(){
+        if(this.hasError) {
+            return(
+                <div className="editPanel">
+                    <div className="errorPanel">
+                        <h2>{ this.state.errorCode }</h2>
+                        <hr />
+                        <h4>{ this.state.errorMessage }</h4>
+                        <h4>Please refresh the app and try again</h4>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            return;
         }
     }
 

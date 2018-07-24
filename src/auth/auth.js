@@ -2,6 +2,7 @@ import auth0 from 'auth0-js';
 import axios from 'axios';
 import User from '../models/user';
 import createHistory from 'history/lib/createBrowserHistory';
+import AuthComponent from '../components/auth';
 
 const history = createHistory({
   forceRefresh: true
@@ -14,6 +15,14 @@ export default class Auth {
     redirectUri: 'https://mprove.herokuapp.com/home',
     responseType: 'token id_token'
   });
+
+  error(error) {
+    AuthComponent.setState({
+      hasError: true,
+      errorCode: error.code,
+      errorMessage: error.message
+    });
+  }
 
   goHome(username) {
     history.push('/' + username + '/home');
@@ -32,8 +41,7 @@ export default class Auth {
           this.loggedInUser = "";
           var errorCode = err.code;
           var errorMessage = err.message;
-          //Observable error here
-          //Listen in auth component
+          this.error(err).bind(this);
         }
         if(user){
           this.loggedInUser = user.email;
@@ -49,8 +57,7 @@ export default class Auth {
       if(err) {
         var errorCode = err.code;
         var errorMessage = err.message;
-        //Observable error here
-          //Listen in auth component
+        this.error(err).bind(this);
       }
       if(authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
@@ -82,8 +89,7 @@ export default class Auth {
         var errorCode = err.code;
         var errorMessage = err.message;
         console.log(errorMessage);
-        //Observable error here
-          //Listen in auth component
+        this.error(err).bind(this);
         return;
       }
       localStorage.setItem('access_token', authResult.accessToken);
@@ -124,8 +130,7 @@ export default class Auth {
       if (err) {
         var errorCode = err.code;
         var errorMessage = err.description;
-        //Observable error here
-          //Listen in auth component
+        this.error(err).bind(this);
         return;
       };
       this.addUser(user);
@@ -162,8 +167,7 @@ export default class Auth {
     }, function (err, resp) {
       if(err){
         console.log(err.message);
-        //Observable error here
-          //Listen in auth component
+        this.error(err).bind(this);
         return;
       }else{
         console.log(resp);
@@ -182,7 +186,7 @@ export default class Auth {
       })
       .catch(function (error) {
         console.log(error);
+        this.error(err).bind(this);
       })
-      //add better error handling later
   }
 }
