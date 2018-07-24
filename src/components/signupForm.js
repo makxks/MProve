@@ -14,14 +14,19 @@ class SignupForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { error: null };
+        this.state = { error: null, tryingSignup: false };
     }
 
     onSubmit(props) {
+        this.setState({ tryingSignup: true });
         var user = new User(props.email, props.username);
         this.auth.signup(props.email, props.password, user, (err) => {
             if (err){
                 this.setState({ error: err });
+                this.setState({ tryingSignup: false });
+            }
+            else{
+                this.setState({ tryingSignup: false });
             }
         });
         this.context.router.push('/'); 

@@ -14,10 +14,14 @@ class LoginForm extends Component {
     }
 
     onSubmit(props) {
+        this.setState({ tryingLogin: true })
         try {
             this.auth.login(props.email, props.password, (err) => {
                 if(err){
-                    this.setState({ error: err });
+                    this.setState({ error: err, tryingLogin: false });
+                }
+                else{
+                    this.setState({ tryingLogin: false });
                 }
             });
         }
@@ -61,29 +65,36 @@ class LoginForm extends Component {
     loginForm(){
         const { fields: { email, password }, handleSubmit } = this.props;
 
-        return (
-        <div className="authForm">
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="commentInput">
-                <h3>Login</h3>
-                <div className={`form-group formInput ${email.touched && email.invalid ? 'has-danger' : ''}`}>
-                    <input type="email" className="form-control commentInput" {...email} />
-                    <label>Your email</label>
-                    <div className="text-help">
-                        {email.touched ? email.error : ''}
+        if(!this.state.tryingLogin){
+            return (
+            <div className="authForm">
+                <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="commentInput">
+                    <h3>Login</h3>
+                    <div className={`form-group formInput ${email.touched && email.invalid ? 'has-danger' : ''}`}>
+                        <input type="email" className="form-control commentInput" {...email} />
+                        <label>Your email</label>
+                        <div className="text-help">
+                            {email.touched ? email.error : ''}
+                        </div>
                     </div>
-                </div>
-                <div className={`form-group formInput ${password.touched && password.invalid ? 'has-danger' : ''}`}>
-                    <input type="password" className="form-control commentInput" {...password} />
-                    <label>Password</label>
-                    <div className="text-help">
-                        {password.touched ? password.error : ''}
+                    <div className={`form-group formInput ${password.touched && password.invalid ? 'has-danger' : ''}`}>
+                        <input type="password" className="form-control commentInput" {...password} />
+                        <label>Password</label>
+                        <div className="text-help">
+                            {password.touched ? password.error : ''}
+                        </div>
                     </div>
-                </div>
-                <button type="submit" className="primaryButton">Submit</button>
-                <button className="primaryButton" onClick={() => this.showResetPanel()}>Reset Password</button>
-            </form>
-        </div>
-        );
+                    <button type="submit" className="primaryButton">Submit</button>
+                    <button className="primaryButton" onClick={() => this.showResetPanel()}>Reset Password</button>
+                </form>
+            </div>
+            );
+        }
+        else{
+            return (
+                <h4>Logging in</h4>
+            )
+        }
         
     }
 
