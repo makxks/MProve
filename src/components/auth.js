@@ -14,6 +14,16 @@ class AuthComponent extends Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false, errorMessage: '', errorCode: '' };
+        auth.errorOccurred
+            .subscribe(
+                (error) => {
+                    this.setState({
+                        hasError: true,
+                        errorMessage: error.message,
+                        errorCode: error.code
+                    })
+                }
+        )
     }
 
     getWindowValue() {
@@ -122,6 +132,7 @@ class AuthComponent extends Component {
                 </header>                
             </div>
             {this.renderAuth()}
+            {this.renderError()}
         </div>
         )
     }

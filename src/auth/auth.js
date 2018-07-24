@@ -3,12 +3,13 @@ import axios from 'axios';
 import User from '../models/user';
 import createHistory from 'history/lib/createBrowserHistory';
 import AuthComponent from '../components/auth';
+import { EventEmitter } from 'events';
 
 const history = createHistory({
   forceRefresh: true
 });
 
-export default class Auth {
+export default class Auth extends EventEmitter {
   auth0 = new auth0.WebAuth({
     domain: 'makks.eu.auth0.com',
     clientID: 'HKr7PTMYONRlzbHZEN3DQ7O3nVjPqedX',
@@ -16,12 +17,10 @@ export default class Auth {
     responseType: 'token id_token'
   });
 
+  errorOccurred = new EventEmitter();
+
   error(error) {
-    this.AuthComponent.setState({
-      hasError: true,
-      errorCode: error.code,
-      errorMessage: error.message
-    });
+    this.errorOccurred.emit('error', error)
   }
 
   goHome(username) {
