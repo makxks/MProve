@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var favicon = require('serve-favicon');
 
 var appRoutes = require('./routes/app');
 var userRoutes = require('./routes/user');
