@@ -55,6 +55,7 @@
     "redux": "^3.7.2",
     "redux-form": "^4.2.2",
     "redux-promise": "^0.5.3",
+    "serve-favicon": "^2.5.0",
     "url-loader": "^0.6.2"
   },
   "false": {}
