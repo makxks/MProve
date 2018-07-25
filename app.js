@@ -19,7 +19,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public/images', 'favicon-16x16.png')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon-16x16.png')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
