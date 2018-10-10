@@ -31,7 +31,7 @@ export default class Auth {
   emailVerified = false;
 
   constructor() {
-    if(localStorage.getItem('access_token')){
+    if(localStorage.getItem('access_token') && this.isAuthenticated()){
       if(localStorage.getItem('user')){
         this.loggedInUser = localStorage.getItem('user');
       }
@@ -120,7 +120,7 @@ export default class Auth {
   }
 
   signup(email, password, user) {
-    if(this.isAuthenticated){
+    if(this.isAuthenticated()){
       this.logout();
     };
     this.auth0.signup({
