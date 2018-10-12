@@ -78,7 +78,11 @@ export default class Auth {
           localStorage.setItem('expires_at', expiresAt);
         });
       }
+      
     });
+    if(!this.isAuthenticated()){
+      this.logout();
+    }
   }
 
   login(email, password) {
